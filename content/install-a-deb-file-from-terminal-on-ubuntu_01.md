@@ -9,9 +9,7 @@ I use Ubuntu 16.04. Sometimes, when I double-click a *.deb* file, the
 installation program does not work. What often solves the problem is
 installing it from terminal.
 
-\[code\]
-
-sudo dpkg -i my\_deb\_file.deb  
+```bash
+sudo dpkg -i my_deb_file.deb
 sudo apt-get -f install
-
-\[/code\]
+```

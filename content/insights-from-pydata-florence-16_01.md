@@ -76,7 +76,7 @@ dependencies are fulfilled. Marco's talk was a really nice intro to the
 tool.
 
 **Going Functional in the Python Data Science Stack,
-[@data\_hope](http://twitter.com/data_hope). **The speaker explained
+[@data_hope](http://twitter.com/data_hope). **The speaker explained
 the directed acyclic graphs that are behind functional programming. It
 was interesting to hear about Dask package and how you can bring its
 lazy evaluation model. Dask allows you to abstract your code and perform

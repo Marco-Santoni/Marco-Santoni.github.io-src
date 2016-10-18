@@ -1,5 +1,16 @@
 [Reference](https://fedoramagazine.org/make-github-pages-blog-with-pelican/)
 
+## Setup
+
+```bash
+git submodule add git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
+# --On OSX only
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+# --
+
+```
+
 ## Migrations from WP
 
 Migrate via
