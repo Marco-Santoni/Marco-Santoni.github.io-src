@@ -48,12 +48,15 @@ We'll first show how to evaluate the success rate on page A with a
 Bayesian approach. The goal is to infer the probability of clicking the
 "Buy Item" button on page A. We model this probability as a
 [Bernoulli](https://www.wikiwand.com/en/Bernoulli_distribution)
-distribution with parameter \[latex\]p_A\[/latex\]:
+distribution with parameter $p_A$:
 
-\[latex\]P(click|\\text{page}=A)=\\begin{cases}p_A & click=1\\\\1-p_A
-& click=0\\end{cases}\[/latex\]
+$$P(click | \text{page}=A) =
+\begin{cases}
+p_A & click=1\\
+1-p_A & click=0\\
+\end{cases}$$
 
-So, \[latex\]p_A\[\\latex\] is the parameter indicating the probability
+So, $p_A$ is the parameter indicating the probability
 of clicking the button on page A. This parameter is unknown and the goal
 of the experiment is to infer it.
 
@@ -62,9 +65,9 @@ from pymc import Uniform, rbernoulli, Bernoulli, MCMC
 from matplotlib import pyplot as plt
 import numpy as np
 
-\# true value of p_A (unknown)
+# true value of p_A (unknown)
 p_A_true = 0.05
-\# number of users visiting page A
+# number of users visiting page A
 N = 1500
 occurrences = rbernoulli(p_A_true, N)
 
@@ -79,7 +82,7 @@ In this code, we are simulating a realisation of the experiment where
 visitors have actually clicked on the button in this realisation.
 
 The next step consist of defining our prior on the
-\[latex\]p_A\[\\latex\] parameter. The **prior definition **is the
+$p_A$ parameter. The **prior definition **is the
 first step of Bayesian inference and is a way to indicate our prior
 belief in the variable.
 
@@ -88,10 +91,10 @@ p_A = Uniform('p_A', lower=0, upper=1)
 obs = Bernoulli('obs', p_A, value=occurrences, observed=True)
 ```
 
-In this section, we define the prior of \[latex\]p_a\[\\latex\] to be a
+In this section, we define the prior of $p_a$ to be a
 uniform distribution. The *obs *variable indicates the Bernoulli
 distribution representing the observations of the click events (indeed
-governed by the \[latex\]p_a\[\\latex\] parameter). The two variables
+governed by the $p_a$ parameter). The two variables
 are assigned to *Uniform* and *Bernoulli* which are stochastic variable
 objects part of PyMC. Each variable is associated with a string name
 (*p_A * and *obs* in this case). The *obs* variable has the *value *
@@ -99,12 +102,12 @@ and the *observed *parameter set because we have observed the
 realisations of the experiments.
 
 ```python
-\# defining a Monte Carlo Markov Chain model
-mcmc = MCMC(\[p_A, obs\])
-\# setting the size of the simulations to 20k particles
+# defining a Monte Carlo Markov Chain model
+mcmc = MCMC([p_A, obs])
+# setting the size of the simulations to 20k particles
 mcmc.sample(20000, 1000)
-\# the resulting posterior distribution is stored in the trace variable
-print mcmc.trace('p_A')\[:\]
+# the resulting posterior distribution is stored in the trace variable
+print mcmc.trace('p_A')[:]
 ```
 
 In this section, the MCMC model is initialised, and the variables *p_A*
@@ -116,7 +119,7 @@ inference.
 
 ```python
 plt.figure(figsize=(8, 7))
-plt.hist(mcmc.trace('p_A')\[:\], bins=35, histtype='stepfilled',
+plt.hist(mcmc.trace('p_A')[:], bins=35, histtype='stepfilled',
 normed=True)
 plt.xlabel('Probability of clicking BUY')
 plt.ylabel('Density')
@@ -131,15 +134,15 @@ plt.show()
 .wp-image-38 .size-full width="800" height="700"}
 
 Then, we might want to answer the question: where am I 90% confident
-that the true \[latex\]p_A\[\\latex\] lies? That's easy to answer.
+that the true $p_A$ lies? That's easy to answer.
 
 ```python
-p_A_samples = mcmc.trace('p_A')\[:\]
+p_A_samples = mcmc.trace('p_A')[:]
 lower_bound = np.percentile(p_A_samples, 5)
 upper_bound = np.percentile(p_A_samples, 95)
 print 'There is 90%% probability that p_A is between %s and %s' %
 (lower_bound, upper_bound)
-\# There is 90% probability that p_A is between 0.0373019596856 and
+# There is 90% probability that p_A is between 0.0373019596856 and
 0.0548052806892
 ```
 
@@ -147,7 +150,7 @@ print 'There is 90%% probability that p_A is between %s and %s' %
 
 We'll now repeat what we have done for page A, and we add a new
 variable *delta *indicating the difference
-between \[latex\]p_A\[\\latex\] and \[latex\]p_B\[\\latex\].
+between $p_A$ and $p_B$.
 
 ```python
 from pymc import Uniform, rbernoulli, Bernoulli, MCMC, deterministic
@@ -177,12 +180,12 @@ return p_A - p_B
 obs_A = Bernoulli('obs_A', p_A, value=occurrences_A, observed=True)
 obs_B = Bernoulli('obs_B', p_B, value=occurrences_B, observed=True)
 
-mcmc = MCMC(\[p_A, p_B, obs_A, obs_B, delta\])
+mcmc = MCMC([p_A, p_B, obs_A, obs_B, delta])
 mcmc.sample(25000, 5000)
 
-p_A_samples = mcmc.trace('p_A')\[:\]
-p_B_samples = mcmc.trace('p_B')\[:\]
-delta_samples = mcmc.trace('delta')\[:\]
+p_A_samples = mcmc.trace('p_A')[:]
+p_B_samples = mcmc.trace('p_B')[:]
+delta_samples = mcmc.trace('delta')[:]
 
 plt.subplot(3,1,1)
 plt.xlim(0, 0.1)
@@ -209,22 +212,17 @@ delta (unknown)')
 plt.xlabel('p_A - p_B')
 plt.legend()
 plt.show()
-
 ```
-
- 
-
- 
 
 ![A_and_B]({filename}/images/A_and_B.png){.alignnone
 .wp-image-40 .size-full width="800" height="600"}
 
 Then, we can answer a question like: what is the probability that
-\[latex\] p_A &gt; p_B\[\\latex\]?
+$ p_A > p_B$?
 
 ```python
-print 'Probability that p_A &gt; p_B:'
-print (delta_samples &gt; 0).mean()
-\# Probability that p_A &gt; p_B:&lt;/pre&gt;
-\# 0.8919
+print 'Probability that p_A > p_B:'
+print (delta_samples > 0).mean()
+# Probability that p_A > p_B
+# 0.8919
 ```
