@@ -8,9 +8,11 @@
 # add the publish repo in subfolder
 git clone git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
 mv Marco-Santoni.github.io.git output
-```
 
-Setup plugin [embed-tweets](https://github.com/lqez/pelican-embed-tweet).
+mkdir lib
+cd lib
+git clone git@github.com:getpelican/pelican-plugins.git
+```
 
 ## Publish
 
