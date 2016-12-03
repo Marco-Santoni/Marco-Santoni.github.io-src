@@ -27,12 +27,11 @@ handle.
 import pandas as pd
 df = pd.DataFrame(housing_data.data)
 df.columns = housing_data.feature_names
-df\['PRICE'\] = housing_data.target
+df['PRICE'] = housing_data.target
 df.head()
 ```
 
-![table]({filename}/images/table.png){.alignnone
-.size-full .wp-image-72 width="1206" height="318"}
+![table]({filename}/images/table.png)
 
 The goal is to predict the *PRICE* variable given the other features.
 How does this variable distribute?
@@ -51,7 +50,7 @@ Let's turn the dataframe into a ML-friendly notation.
 
 ```python
 X = df.drop('PRICE', axis=1)
-y = df\['PRICE'\]
+y = df['PRICE']
 ```
 
 We will now define the metric that assess the accuracy of our
@@ -75,9 +74,9 @@ can exploit?
 ```python
 
 plt.figure(figsize=(10,7))
-plt.scatter(df\['RM'\], y)
+plt.scatter(df['RM'], y)
 plt.xlabel('Average number of rooms')
-plt.ylabel('Housing price in \$1000\\'s')
+plt.ylabel('Housing price in \$1000\'s')
 plt.show()
 
 ```
@@ -95,7 +94,7 @@ from sklearn.linear_model import LinearRegression
 
 def just_RM_column(X):
 RM_col_index = 5
-return X\[:, \[RM_col_index\]\]
+return X[:, [RM_col_index]]
 
 pipe = make_pipeline(
 FunctionTransformer(just_RM_column),
@@ -107,7 +106,7 @@ How well does it perform?
 
 ```python
 evaluate_model(X, y, pipe)
-'''Mean Squared Error \[ 43.19492771 41.72813479 46.89293772\] Accuracy:
+'''Mean Squared Error [43.19492771 41.72813479 46.89293772] Accuracy:
 43.94'''
 ```
 
@@ -124,25 +123,25 @@ random_state=5
 )
 pipe.fit(X_train, y_train)
 fake_X_train = np.array(X_train)
-fake_X_train\[:, 5\] = np.linspace(min(fake_X_train\[:, 5\]),
-max(fake_X_train\[:, 5\]), num=len(fake_X_train\[:, 5\]))
+fake_X_train[:, 5] = np.linspace(min(fake_X_train[:, 5]),
+max(fake_X_train[:, 5]), num=len(fake_X_train[:, 5]))
 fake_X_test = np.array(X_test)
-fake_X_test\[:, 5\] = np.linspace(min(fake_X_test\[:, 5\]),
-max(fake_X_test\[:, 5\]), num=len(fake_X_test\[:, 5\]))
+fake_X_test[:, 5] = np.linspace(min(fake_X_test[:, 5]),
+max(fake_X_test[:, 5]), num=len(fake_X_test[:, 5]))
 plt.figure(figsize=(20,7))
 plt.subplot(1, 2, 1)
-plt.scatter(X_train\['RM'\], y_train)
-plt.scatter(fake_X_train\[:, 5\], pipe.predict(fake_X_train),
+plt.scatter(X_train['RM'], y_train)
+plt.scatter(fake_X_train[:, 5], pipe.predict(fake_X_train),
 color='r')
 plt.xlabel('Average number of rooms')
-plt.ylabel('Housing price in \$1000\\'s')
+plt.ylabel('Housing price in \$1000\'s')
 plt.title('Train Data Set')
 plt.subplot(1, 2, 2)
-plt.scatter(X_test\['RM'\], y_test)
-plt.scatter(fake_X_test\[:, 5\], pipe.predict(fake_X_test),
+plt.scatter(X_test['RM'], y_test)
+plt.scatter(fake_X_test[:, 5], pipe.predict(fake_X_test),
 color='r')
 plt.xlabel('Average number of rooms')
-plt.ylabel('Housing price in \$1000\\'s')
+plt.ylabel('Housing price in \$1000\'s')
 plt.title('Test Data Set')
 plt.show()
 
@@ -157,7 +156,7 @@ We now do a bit of feature engineering. We square the features.
 
 ```python
 def add_squared_col(X):
-return np.hstack((X, X\*\*2))
+return np.hstack((X, X**2))
 
 pipe = make_pipeline(
 FunctionTransformer(just_RM_column),
@@ -172,7 +171,7 @@ We evaluate this other pipeline.
 evaluate_model(X, y, pipe)
 '''
 Mean Squared Error
-\[ 40.31207562 36.75642688 40.75444834\]
+[ 40.31207562 36.75642688 40.75444834]
 Accuracy: 39.27'''
 ```
 
@@ -198,7 +197,7 @@ DecisionTreeRegressor(max_depth=3)
 evaluate_model(X, y, pipe)
 '''
 Mean Squared Error
-\[ 57.28366371 61.5437311 84.32756118\]
+[ 57.28366371 61.5437311 84.32756118]
 Accuracy: 67.72
 '''
 plot_model_RM(X, y, pipe)
@@ -213,9 +212,9 @@ We now explore a second feature: *INDUS*.
 ```python
 
 plt.figure(figsize=(10,7))
-plt.scatter(df\['INDUS'\], y)
+plt.scatter(df['INDUS'], y)
 plt.xlabel('Average number of rooms')
-plt.ylabel('Housing price in \$1000\\'s')
+plt.ylabel('Housing price in \$1000\'s')
 plt.show()
 
 ```
@@ -232,7 +231,7 @@ this second feature.
 def RM_and_INDUS_cols(X):
 RM_col_index = 5
 INDUS_col_index = 2
-return X\[:, \[RM_col_index, INDUS_col_index\]\]
+return X[:, [RM_col_index, INDUS_col_index]]
 
 pipe = make_pipeline(
 FunctionTransformer(RM_and_INDUS_cols),
@@ -243,7 +242,7 @@ LinearRegression()
 evaluate_model(X, y, pipe)
 '''
 Mean Squared Error
-\[ 32.3420789 31.4260901 35.95835866\]
+[ 32.3420789 31.4260901 35.95835866]
 Accuracy: 33.24
 '''
 ```
@@ -263,8 +262,8 @@ pipe.fit(X_train, y_train)
 X_test = np.array(X_test)
 fig = plt.figure(figsize=(10,7))
 ax = p3.Axes3D(fig)
-x = X_test\[:, 2\]
-y = X_test\[:, 5\]
+x = X_test[:, 2]
+y = X_test[:, 5]
 z = y_test
 ax.scatter(x, y, z, c='r', marker='o')
 x = np.arange(min(x), max(x), (max(x) - min(x)) / 100.0)
@@ -272,11 +271,11 @@ y = np.arange(min(y), max(y), (max(y) - min(y)) / 100.0)
 X, Y = np.meshgrid(x, y)
 Z = np.zeros(X.shape)
 fake_X = np.zeros((1, 10))
-for i in range(X.shape\[0\]):
-for j in range(X.shape\[1\]):
-fake_X\[0, 2\] = X\[i, j\]
-fake_X\[0, 5\] = Y\[i, j\]
-Z\[i, j\] = pipe.predict(fake_X)\[0\]
+for i in range(X.shape[0]):
+for j in range(X.shape[1]):
+fake_X[0, 2] = X[i, j]
+fake_X[0, 5] = Y[i, j]
+Z[i, j] = pipe.predict(fake_X)[0]
 ax.plot_surface(X, Y, Z, alpha=0.2)
 ax.set_xlabel('INDUS')
 ax.set_ylabel('RM')
@@ -300,7 +299,7 @@ LinearRegression()
 evaluate_model(X, y, pipe)
 '''
 Mean Squared Error
-\[ 20.50009513 22.42870192 27.88911654\]
+[ 20.50009513 22.42870192 27.88911654]
 Accuracy: 23.61'''
 ```
 
@@ -316,7 +315,7 @@ LinearRegression()
 evaluate_model(X, y, pipe)
 '''
 Mean Squared Error
-\[ 16.7819682 14.599869 18.17785453\]
+[ 16.7819682 14.599869 18.17785453]
 Accuracy: 16.52'''
 ```
 
@@ -335,7 +334,7 @@ Ridge(alpha=3)
 evaluate_model(X, y, pipe)
 '''
 Mean Squared Error
-\[ 16.4292824 14.50522561 18.27167008\]
+[ 16.4292824 14.50522561 18.27167008]
 Accuracy: 16.40'''
 ```
 

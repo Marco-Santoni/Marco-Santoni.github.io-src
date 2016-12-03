@@ -73,8 +73,8 @@ SELECT
 color
 FROM samples
 JOIN cumulative_bounds ON
-sample::numeric &lt;@ numrange(lower_cum_bound::numeric,
-upper_cum_bound::numeric, '(\]');
+sample::numeric <@ numrange(lower_cum_bound::numeric,
+upper_cum_bound::numeric, '(]');
 ```
 
 Let's look at one piece at a time.
@@ -152,8 +152,8 @@ SELECT
 color
 FROM samples
 JOIN cumulative_bounds ON
-sample::numeric &lt;@ numrange(lower_cum_bound::numeric,
-upper_cum_bound::numeric, '(\]');
+sample::numeric <@ numrange(lower_cum_bound::numeric,
+upper_cum_bound::numeric, '(]');
 ```
 
 In the last part, we're sampling 1000 times a random number between 0

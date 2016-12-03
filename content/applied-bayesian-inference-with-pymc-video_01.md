@@ -8,4 +8,4 @@ Status: published
 I was glad to give an intro to Bayesian Inference at PyData Florence
 2016. The video of the talk is now out.
 
-https://www.youtube.com/watch?v=BX1MjMDKhXU
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BX1MjMDKhXU" frameborder="0" allowfullscreen></iframe>
