@@ -1,9 +1,17 @@
-[Reference](https://fedoramagazine.org/make-github-pages-blog-with-pelican/)
+[Reference 1](https://fedoramagazine.org/make-github-pages-blog-with-pelican/)
+[Reference 2](http://mathamy.com/migrating-to-github-pages-using-pelican.html)
+[Pelican Make Command](https://github.com/getpelican/pelican-blog/blob/master/Makefile)
 
 ## Setup
 
 ```bash
-git submodule add git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
+# add the publish repo in subfolder
+git clone git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
+mv Marco-Santoni.github.io.git output
+
+make html && make serve
+# visit http://localhost:8000/
+make publish
 # --On OSX only
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
