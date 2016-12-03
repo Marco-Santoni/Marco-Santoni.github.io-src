@@ -10,7 +10,8 @@ I have just joined [PyData](https://www.pycon.it/p3/schedule/pycon7/)
 conference in Florence, and I will list briefly some
 interesting insights.
 
-https://twitter.com/leriomaggio/status/720894471060201472
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Oh my... We are already overcrowded <a href="https://twitter.com/pyconit">@pyconit</a> and it&#39;s *just* the beginning!! 🎉🎉 good job guys! 🙌🏻 <a href="https://twitter.com/hashtag/pycon7?src=hash">#pycon7</a></p>&mdash; (((Valerio Maggio))) (@leriomaggio) <a href="https://twitter.com/leriomaggio/status/720894471060201472">April 15, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 **Time Travel and Time Series Analysis with Pandas and Statsmodels,
 [@hendorf.](http://twitter.com/hendorf)** The focus of the talk was time
@@ -48,7 +49,8 @@ useful mainly for didactic purposes. I think it can be a nice tool for
 teachers to explain data mining and machine learning in a nice graphical
 way. It is really suitable for lectures.
 
-https://twitter.com/pydatait/status/721235005746188289
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">&quot;Simple APIs and innovative documentation processes&quot; keynote by <a href="https://twitter.com/EGouillart">@EGouillart</a> now live <a href="https://twitter.com/PyData">@PyData</a> <a href="https://twitter.com/pyconit">@pyconit</a> <a href="https://twitter.com/hashtag/pydatait?src=hash">#pydatait</a> <a href="https://t.co/Gt8cxIyafJ">pic.twitter.com/Gt8cxIyafJ</a></p>&mdash; PyData Italy (@pydatait) <a href="https://twitter.com/pydatait/status/721235005746188289">April 16, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 **Simple APIs and innovative documentation processes: looking back at
 the success of Scientific Python,
@@ -97,4 +99,5 @@ consists basically in dropping out links of the networks at random for
 each sample. The advantage is that you prevent overfitting and reduce
 the computational cost at the same time.
 
-https://twitter.com/hendorf/status/722763440448606208
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hendorf">@hendorf</a> thank you for coming! enjoy your next conference :)</p>&mdash; PyCon Italy (@pyconit) <a href="https://twitter.com/pyconit/status/722763833387966465">April 20, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
