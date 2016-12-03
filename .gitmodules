@@ -1,6 +1,3 @@
 [submodule "output"]
 	path = output
 	url = git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
-[submodule "Marco-Santoni.github.io"]
-	path = Marco-Santoni.github.io
-	url = git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
