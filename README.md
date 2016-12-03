@@ -8,15 +8,26 @@
 # add the publish repo in subfolder
 git clone git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
 mv Marco-Santoni.github.io.git output
+```
 
-make html && make serve
-# visit http://localhost:8000/
-make publish
+Setup plugin [embed-tweets](https://github.com/lqez/pelican-embed-tweet).
+
+## Publish
+
+```bash
 # --On OSX only
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 # --
+make html && make serve
+# visit http://localhost:8000/
+make publish
 
+cd output
+git add .
+git commit -m "a new post"
+git push
+# visit http://marco-santoni.github.io/
 ```
 
 ## Migrations from WP
