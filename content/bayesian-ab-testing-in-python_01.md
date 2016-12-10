@@ -3,7 +3,7 @@ Date: 2016-05-15 15:33
 Author: mrsantoni
 Category: Code
 Tags: Bayesian
-Slug: bayesian-ab-testing-in-python
+Slug: 2016/05/15/bayesian-ab-testing-in-python
 Status: published
 
 Imagine you re-designing your e-commerce website. You have to decide

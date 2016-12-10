@@ -2,7 +2,7 @@ Title: Install a .deb file from terminal on Ubuntu
 Date: 2016-05-23 08:18
 Author: mrsantoni
 Category: Uncategorized
-Slug: install-a-deb-file-from-terminal-on-ubuntu
+Slug: 2016/05/23/install-a-deb-file-from-terminal-on-ubuntu
 Status: published
 
 I use Ubuntu 16.04. Sometimes, when I double-click a *.deb* file, the

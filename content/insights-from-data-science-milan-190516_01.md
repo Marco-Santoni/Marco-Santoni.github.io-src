@@ -3,7 +3,7 @@ Date: 2016-05-20 17:56
 Author: mrsantoni
 Category: Events
 Tags: Events
-Slug: insights-from-data-science-milan-190516
+Slug: 2016/05/20/insights-from-data-science-milan-190516
 Status: published
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/DeepLearning?src=hash">#DeepLearning</a> introduction and enterprise architectures using <a href="https://twitter.com/hashtag/H2O?src=hash">#H2O</a> - first <a href="https://twitter.com/hashtag/DataScienceMilan?src=hash">#DataScienceMilan</a> meetup! - <a href="https://t.co/I8LsfaFJSu">https://t.co/I8LsfaFJSu</a></p>&mdash; Andrea Scarso (@andreaesseci) <a href="https://twitter.com/andreaesseci/status/733044189349482496">May 18, 2016</a></blockquote>

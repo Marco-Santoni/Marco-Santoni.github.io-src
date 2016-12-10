@@ -3,7 +3,7 @@ Date: 2016-04-20 06:05
 Author: mrsantoni
 Category: Events
 Tags: Events
-Slug: insights-from-pydata-florence-16
+Slug: 2016/04/20/insights-from-pydata-florence-16
 Status: published
 
 I have just joined [PyData](https://www.pycon.it/p3/schedule/pycon7/)

@@ -2,7 +2,7 @@ Title: Weighted Random Sampling with PostgreSQL
 Date: 2016-08-23 16:22
 Author: mrsantoni
 Category: Code
-Slug: weighted-random-sampling-with-postgresql
+Slug: 2016/08/23/weighted-random-sampling-with-postgresql
 Status: published
 
 You have a table like the following:
