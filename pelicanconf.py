@@ -36,5 +36,8 @@ MARKUP = ('md', 'ipynb')
 PLUGIN_PATHS = ['lib/pelican-plugins', 'lib']
 PLUGINS = ['render_math', 'pelican-ipynb.markup']
 
+THEME = 'lib/pelican-clean-blog'
+HEADER_COLOR = '#1a1a1a' # from pelican-clean-blog theme
+
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

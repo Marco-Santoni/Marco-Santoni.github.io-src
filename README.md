@@ -13,6 +13,7 @@ mkdir lib
 cd lib
 git clone git@github.com:getpelican/pelican-plugins.git
 git clone git@github.com:danielfrg/pelican-ipynb.git
+git clone git@github.com:gilsondev/pelican-clean-blog.git
 ```
 
 ## Publish
