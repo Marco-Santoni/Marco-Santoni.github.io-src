@@ -31,8 +31,10 @@ SOCIAL = (('You can add links in your config file', '#'),
 
 DEFAULT_PAGINATION = 10
 
-PLUGIN_PATHS = ['lib/pelican-plugins']
-PLUGINS = ['render_math']
+MARKUP = ('md', 'ipynb')
+
+PLUGIN_PATHS = ['lib/pelican-plugins', 'lib']
+PLUGINS = ['render_math', 'pelican-ipynb.markup']
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

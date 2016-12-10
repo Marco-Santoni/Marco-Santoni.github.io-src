@@ -12,6 +12,7 @@ mv Marco-Santoni.github.io.git output
 mkdir lib
 cd lib
 git clone git@github.com:getpelican/pelican-plugins.git
+git clone git@github.com:danielfrg/pelican-ipynb.git
 ```
 
 ## Publish

@@ -2,3 +2,6 @@ pelican
 markdown
 typogrify
 beautifulsoup4
+ipython
+nbconvert
+jupyter
