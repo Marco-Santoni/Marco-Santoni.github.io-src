@@ -3,7 +3,8 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'Marco Santoni'
-SITENAME = 'Marco Santoni - Data Scientist'
+SITENAME = 'Marco Santoni'
+SITESUBTITLE = 'Data Scientist'
 SITEURL = ''
 
 PATH = 'content'
@@ -35,6 +36,13 @@ MARKUP = ('md', 'ipynb')
 
 PLUGIN_PATHS = ['lib/pelican-plugins', 'lib']
 PLUGINS = ['render_math', 'pelican-ipynb.markup']
+
+THEME = 'lib/pelican-clean-blog'
+HEADER_COLOR = '#1a1a1a' # from pelican-clean-blog theme
+SOCIAL = (
+    ('linkedin', 'https://linkedin.com/in/msantoni'),
+    ('twitter', 'https://twitter.com/mrsantoni')
+)
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

@@ -13,6 +13,7 @@ mkdir lib
 cd lib
 git clone git@github.com:getpelican/pelican-plugins.git
 git clone git@github.com:danielfrg/pelican-ipynb.git
+git clone git@github.com:gilsondev/pelican-clean-blog.git
 ```
 
 ## Publish
@@ -37,10 +38,14 @@ git push
 
 Migrate via
 
+```bash
 pelican-import --wpfile -m markdown -o content --dir-page /media/sf_VBoxShare/marcosantoni.wordpress.2016-08-24.xml
+```
 
 Download all images via WP Plugin downML. Place them in content/images
 
 Replace images url with
 
+```bash
 cat weighted-random-sampling-with-postgresql.md | sed 's/http:\/\/www.marco.*2016\/[0-9][0-9]\//\{filename\}\/images\//' > weighted-random-sampling-with-postgresql_01.md
+```
