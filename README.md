@@ -20,8 +20,7 @@ git clone git@github.com:gilsondev/pelican-clean-blog.git
 
 ```bash
 # --On OSX only
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
 # --
 make html && make serve
 # visit http://localhost:8000/
