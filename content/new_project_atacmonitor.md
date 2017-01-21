@@ -3,7 +3,7 @@ Date: 2017-01-21 18:00
 Slug: monitoring_bus_frequencies_in_rome
 Status: published
 
-I have just launched [atacmonitor.com](www.atacmonitor.com). It is a website providing information about the waiting time at bus stops in Rome.
+I have just launched [atacmonitor](www.atacmonitor.com). It is a website providing information about the waiting time at bus stops in Rome.
 
 ![Waiting times]({filename}/images/atacmonitor.gif)
 
