@@ -5,7 +5,7 @@ Status: published
 
 I have just launched [atacmonitor](http://atacmonitor.com/). It is a website providing information about the waiting time at bus stops in Rome.
 
-![Waiting times]({filename}/images/atacmonitor.gif)
+![Waiting times]({static}/images/atacmonitor.gif)
 
 ## Overview
 

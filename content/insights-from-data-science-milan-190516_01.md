@@ -46,7 +46,7 @@ complexity of designing the algorithm.
 Different languages in different teams.
 
 ![Data science
-languages]({filename}/images/20160519_193804-1.jpg){.alignnone
+languages]({static}/images/20160519_193804-1.jpg){.alignnone
 .size-full .wp-image-58 width="896" height="504"}
 
 It can be challenge to bring machine learning models from a team to
@@ -55,7 +55,7 @@ in different frameworks. This organization leads to complex deployment
 processes.
 
 ![Tips for
-deployment]({filename}/images/20160519_194315.jpg){.alignnone
+deployment]({static}/images/20160519_194315.jpg){.alignnone
 .size-full .wp-image-59 width="896" height="504"}
 
 Paolo recommended to have the entire team on the same framework. The

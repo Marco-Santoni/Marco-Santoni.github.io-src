@@ -5,7 +5,7 @@ Status: published
 
 _The Signal and The Noise_ by Nate Silver is a must-read book for those interested in predictions. It is not a technical book. You will not learn any algorithm. However, it presents a series of real-world scenarios when predictions did work and where predictions did not work. The book is well written and is full of valuable references to support its arguments.
 
-![The Signal and The Noise by Nate Silver]({filename}/images/signal_and_noise_book.jpg)
+![The Signal and The Noise by Nate Silver]({static}/images/signal_and_noise_book.jpg)
 
 ## 1. Anyone can beat an index fund
 
@@ -25,7 +25,7 @@ Frequentist statistics emphasizes the purity of the experiment: every hypothesis
 
 Weather predictions do not rely on statistics, nor on machine learning. They employ heavy simulations. The earth is split in cells, and the meteorological dynamics are simulated via well known models. The first weather simulation ever done is by the English physicist Lewis Fry Richardson in 1916.
 
-![Richardson's Matrux]({filename}/images/richardson_grid.jpg)
+![Richardson's Matrux]({static}/images/richardson_grid.jpg)
 
 ## 5. When predictions don't work - Earthquakes
 

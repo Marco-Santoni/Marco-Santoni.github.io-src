@@ -130,7 +130,7 @@ plt.show()
 
  
 
-![p_A_hist_N_1500]({filename}/images/p_A_hist_N_1500.png){.alignnone
+![p_A_hist_N_1500]({static}/images/p_A_hist_N_1500.png){.alignnone
 .wp-image-38 .size-full width="800" height="700"}
 
 Then, we might want to answer the question: where am I 90% confident
@@ -214,7 +214,7 @@ plt.legend()
 plt.show()
 ```
 
-![A_and_B]({filename}/images/A_and_B.png){.alignnone
+![A_and_B]({static}/images/A_and_B.png){.alignnone
 .wp-image-40 .size-full width="800" height="600"}
 
 Then, we can answer a question like: what is the probability that
