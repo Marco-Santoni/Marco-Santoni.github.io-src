@@ -31,7 +31,7 @@ df['PRICE'] = housing_data.target
 df.head()
 ```
 
-![table]({filename}/images/table.png)
+![table]({static}/images/table.png)
 
 The goal is to predict the *PRICE* variable given the other features.
 How does this variable distribute?
@@ -43,7 +43,7 @@ plt.xlabel('PRICE')
 ```
 
 ![download
-(8)]({filename}/images/download-8.png){.alignnone
+(8)]({static}/images/download-8.png){.alignnone
 .size-full .wp-image-74 width="378" height="271"}
 
 Let's turn the dataframe into a ML-friendly notation.
@@ -81,7 +81,7 @@ plt.show()
 
 ```
 
-![download]({filename}/images/download.png){.alignnone
+![download]({static}/images/download.png){.alignnone
 .size-full .wp-image-78 width="610" height="438"}
 
 As expected, there is a relation between the average number of rooms and
@@ -149,7 +149,7 @@ plot_model_RM(X, y, pipe)
 ```
 
 ![download
-(1)]({filename}/images/download-1.png){.alignnone
+(1)]({static}/images/download-1.png){.alignnone
 .size-full .wp-image-84 width="1173" height="449"}
 
 We now do a bit of feature engineering. We square the features.
@@ -182,7 +182,7 @@ plot_model_RM(X, y, pipe)
 ```
 
 ![download
-(2)]({filename}/images/download-2.png){.alignnone
+(2)]({static}/images/download-2.png){.alignnone
 .size-full .wp-image-86 width="1165" height="449"}
 We now try a different model like a *decision tree*.
 
@@ -204,7 +204,7 @@ plot_model_RM(X, y, pipe)
 ```
 
 ![download
-(3)]({filename}/images/download-3.png){.alignnone
+(3)]({static}/images/download-3.png){.alignnone
 .size-full .wp-image-87 width="1165" height="449"}
 
 We now explore a second feature: *INDUS*.
@@ -220,7 +220,7 @@ plt.show()
 ```
 
 ![download
-(4)]({filename}/images/download-4.png){.alignnone
+(4)]({static}/images/download-4.png){.alignnone
 .size-full .wp-image-89 width="610" height="438"}
 
 So, we see another relation between *INDUS* and *PRICE*. So, let's add
@@ -284,7 +284,7 @@ ax.set_zlabel('Price')
 plot_model_RM_INDUS(X, y, pipe)
 ```
 
-![animation]({filename}/images/animation.gif){.alignnone
+![animation]({static}/images/animation.gif){.alignnone
 .size-full .wp-image-91 width="720" height="504"}
 
 How pretty is that?

@@ -9,7 +9,7 @@ _The Pragmatic Programmer: from Journeyman to Master_ by Andrew Hunt and David T
 
 The book was originally published in 1999, so technologies and tools are quite outdated. However, the main principle remain surprisingly up to date.
 
-![The Pragmatic Programmer]({filename}/images/pragmatic_programmer.jpg)
+![The Pragmatic Programmer]({static}/images/pragmatic_programmer.jpg)
 
 ## 1. Don't Repeat Yourself
 
