@@ -255,3 +255,327 @@ Retrieve specific version:
 ```
 img_ds = Dataset.get_by_name(workspace=ws, name='img_files', version=2)
 ```
+
+# Compute Contexts
+
+The runtime context for each experiment consists of
+
+- *environment* for the script, which includes all packages
+- *compute target* on which the environment will be deployed
+
+## Intro to Environments
+
+Python runs in virtual environments (eg `Conda`, `pip`). Azure creates a Docker container and creates the environment. You create environments by
+
+- `Conda` or `pip` yaml file and load it:
+
+```
+env = Environment.from_conda_specification(name='training_env', file_path='./conda.yml')
+```
+
+- from existing `Conda` environment:
+
+```
+env = Environment.from_conda_environment(name='training_env',
+                            conda_environment_name='py_env')
+```
+
+- specifying packages:
+
+```
+env = Environment('training_env')
+deps = CondaDependencies.create(conda_packages=['pandas', 'numpy']
+                              pip_packages=['azureml-defaults'])
+env.python.conda_dependencies = deps
+```
+
+Once created, you can register the environment in the workspace.
+
+```
+env.register(workspace=ws)
+```
+
+Retrieve and assign it to a `ScriptRunConfig` or an `Estimator`
+
+```
+tr_env = Environment.get(workspace=ws, name='training_env')
+estimator = Estimator(
+  source_directory='experiment_folder',
+  entry_script='training_script.py',
+  compute_target='local',
+  environment_definition=tr_env
+  )
+```
+
+## Compute targets
+
+Compute targets are physical or virtual computer on which experiments are run. Types of compute
+
+- _local compute_: your workstation or a virtual machine
+- _compute clusters_: multi-node clusters of VMs that automatically scale up or down
+- _inference clusters_: to deploy models, they use containers to initiate computing
+- _attached compute_: attach a VM or Databricks cluster that you already use
+
+You can create a compute target via AML studio or via SDK. A **managed** compute target is one managed by AML. Via SDK
+
+```
+ws = Workspace.from_config()
+compute_name = 'aml-cluster'
+compute_config = AmlCompute.provisioning_configuration(
+  vm_size='STANDARD_DS12_V2',
+  min_nodes=0,
+  max_nodes=4,
+  vm_priority='dedicated'
+  )
+aml_cluster = ComputeTarget.create(we, compute_name, compute_config)
+aml_cluster.wait_for_completion()
+```
+
+An **unmanaged** compute target is defined and managed outside AML. You can attach it via SDK:
+
+```
+ws = Workspace.from_config()
+compute_name = 'db-cluster'
+db_workspace_name = 'db_workspace'
+db_resource_group = 'db_resource_group'
+db_access_token = 'aocsinaocnasoivn'
+db_config = DatabricksCompute.attach_configuration(
+  resource_group=db_resource_group,
+  workspace_name=db_workspace_name,
+  access_token=db_access_token
+  )
+db_cluster = ComputeTarget.create(we, compute_name, db_config)
+db_cluster.wait_for_completion()
+```
+
+You can check if a compute target does not exist already:
+
+```
+compute_name = 'aml_cluster'
+try:
+  aml_cluster = ComputeTarget(workspace=ws, name=compute_name)
+except ComputeTargetException:
+  # create it
+  ...
+```
+
+You can use a compute target in an experiment run by specifying it as a parameter
+
+```
+compute_name = 'aml_cluster'
+training_env = Environment.get(workspace=ws, name='training_env')
+estimator = Estimator(
+  source_directory='experiment_folder',
+  entry_script='training_script.py',
+  environment_definition=training_env,
+  compute_target=compute_name
+  )
+# or specify a ComputeTarget object
+training_cluster = ComputeTarget(workspace=ws, name=compute_name)
+estimator = Estimator(
+  source_directory='experiment_folder',
+  entry_script='training_script.py',
+  environment_definition=training_env,
+  compute_target=training_cluster
+  )
+```
+
+# Orchestrating with Pipelines
+
+A _pipeline_ is a workflow of ml tasks in which each tasks is implemented as a _step_ (either sequential or parallel). You can combine different compute targets. Common types of step:
+
+- _PythonScriptStep_
+- _EstimatorStep_: runs an estimator
+- _DataTransferStep_: uses ADF
+- _DatabricksStep_
+- _AdlaStep_: runs a `U-SQL` job in Azure Data Lake Analytics
+
+Define steps:
+
+```
+step1 = PythonScriptStep(
+  name='prepare data',
+  source_directory='scripts',
+  script_name='data_prep.py',
+  compute_target='aml-cluster',
+  runconfig=run_config
+  )
+
+step2 = EstimatorStep(
+  name='train model',
+  estimator=sk_estimator,
+  compute_target='aml-cluster'
+  )
+```
+
+Assign steps to pipeline:
+
+```
+train_pipeline = Pipeline(
+  workspace=ws,
+  steps=[step1,step2]
+  )
+# create experiment and run pipeline
+experiment = Experiment(workspace=ws, name='training-pipeline')
+pipeline_run = experiment.submit(train_pipeline)
+```
+
+## Pass data between steps
+
+The `PipelineData` object is a special kind of `DataReference` that
+
+- reference a location in a store
+- creates a da dependency between pipelines
+
+To pass it
+
+- define a `PipelineData` object that references a location in a data store
+- specify the object as input or output for the steps that use it
+- pass the `PipelineData` object as a script parameter in steps that run scripts
+
+Example
+
+```
+raw_ds = Dataset.get_by_name(ws, 'raw_dataset')
+# Define object to pass data between steps
+data_store = ws.get_default_datastore()
+prepped_data = PipelineData('prepped', datastore=data_store)
+
+step1 = PythonScriptStep(
+  name='prepare data',
+  source_directory='scripts',
+  script_name='data_prep.py',
+  compute_target='aml-cluster',
+  runconfig=run_config,
+  # specify dataset
+  inputs = [raw_ds.as_named_input('raw_data')],
+  # specify PipelineData as output
+  outputs = [prepped_data],
+  # script reference
+  arugments = ['--folder', prepped_data]
+  )
+
+step2 = EstimatorStep(
+  name='train model',
+  estimator=sk_estimator,
+  compute_target='aml-cluster'
+  # specify PipelineData
+  inputs = [prepped_data],
+  # pass reference to estimator script
+  estimator_entry_script_arguments = ['--folder', prepped_data]
+  )
+```
+
+Inside the script, you can get reference to `PipelineData` object from the argument, and use it like  a local folder.
+
+```
+parser = argpare.ArgumentParser()
+parser.add_argument('--folder', type=str, dest='folder')
+args = parser.parse_args()
+output_folder = args.folder
+
+# ...
+
+# save data to PipelineData location
+os.makedirs(output_folder, exist_ok=True)
+output_path = os.path.join(output_folder, 'prepped_data.csv')
+df.to_csv(output_path)
+```
+
+## Reuse steps
+
+By default, the step output from a previous pipeline run is reused without rerunning the step (if script, source directory and other params have not changed). You can control this:
+
+```
+step1 = PythonScriptStep(
+  #...
+  allow_reuse=False
+  )
+```
+
+You can force the steps to run regardless of individual configuration:
+
+```
+pipeline_run = experiment.submit(train_pipeline, regenerate_outputs=True)
+```
+
+## Publish pipelines
+
+You can publish a pipelien to create a REST endpoint through which the pipeline can be run on demand.
+
+```
+published_pipeline = pipeline.publish(
+  name='training_pipeline',
+  description='Model training pipeline',
+  version='1.0'
+  )
+```
+
+You can view it in ML Studio and get the endpoint:
+
+```
+published_pipeline.endpoint
+```
+
+You start a published endpoint by making an HTTP request to it. You pass the authorisation header (with token) and a JSON payload specifying the experiment name. The pipeline is run asynchronously, you get the run ID as response.
+
+## Pipeline parameters
+
+Create a `PipelineParameter` object for each parameter. Example:
+
+```
+reg_param = PipelineParameter(name='reg_rate', default_value=0.01)
+# ...
+step2 = EstimatorStep(
+  # ...
+  estimator_entry_script_arguments=[
+    '--folder', prepped,
+    '--reg', reg_param
+  ]
+)
+```
+
+After you publish a parametrised pipeline, you can pass parameter values in the JSON payload of the REST interface. Example
+
+```
+requests.post(
+  enpoint,
+  headers=auth_header,
+  json={
+    'ExperimentName': 'run_training_pipeline',
+    'ParameterAssignments': {
+      'reg_rate': 0.1
+    }
+  }
+  )
+```
+
+## Schedule pipelines
+
+Define a `ScheduleRecurrence` and use it to create a `Schedule`.
+
+```
+daily = ScheduleRecurrence(
+  frequency='Day',
+  interval=1
+  )
+pipeline_schedule = Schedule.create(
+  ws,
+  name='Daily Training',
+  description='train model every day',
+  pipeline_id=published_pipeline.id,
+  experiment_name='Training_Pipeline',
+  recurrence=daily
+  )
+```
+
+To schedule a pipeline to run whenever **data changes**, you must create a `Schedule` that monitors a specific path on a datastore:
+
+```
+training_datastore = Datastore(workspace=ws, name='blob_data')
+pipeline_schedule = Schedule.create(
+  # ...
+  datastore=training_datastore,
+  path_on_datastore='data/training'
+  )
+```
