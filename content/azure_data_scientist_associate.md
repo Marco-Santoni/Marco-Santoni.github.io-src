@@ -579,3 +579,171 @@ pipeline_schedule = Schedule.create(
   path_on_datastore='data/training'
   )
 ```
+
+# Deploy ML Models
+
+You can deploy ass **container** to several compute targets
+
+- Azure ML compute instance
+- Azure container instance
+- Azure function
+- Azure Kubernetes service
+- IoT module
+
+Steps
+
+1. register the model
+2. inference configuration
+3. deployment configuration
+4. deploy model
+
+## Register the model
+
+After training, you must register the model to Azure ML workspace.
+
+```
+classification_model = Model.register(
+  workspace=ws,
+  model_name='classification_model',
+  model_path='model.pkl',
+  description='A classification model'
+  )
+```
+
+Or you can use the reference to the run:
+
+```
+run.register_model(
+  model_name='classification_model',
+  model_path='outputs/model.pkl',
+  description='A classification model'
+  )
+```
+
+## Inference configuration
+
+The model will be deployed as a service consisting of
+
+- a script to load the model and return predictions for submitted data
+- an environment in which the script will be run
+
+Create the _entry script_ (or _scoring script_) as a Python file including 2 functions
+
+- `init()` called when service is initialised (load model from registry)
+- `run(raw_data)` called when new data is submitted to the service (generate predictions)
+
+Example
+
+```
+def init():
+  global model
+  model_path = Model.get_model_path('classification_model')
+  model = joblib.load(model_path)
+
+def run(raw_data):
+  data = np.array(json.loads(raw_data)['data'])
+  predictions = model.predict(data)
+  # return predictions as any JSON seriazable format
+  return predictions.tolist()
+```
+
+You can configure the environment using Conda. You can use a `CondaDependencies` class to create a default environment (including `azureml-defaults` and other commonly-used) and add any other required packages. You then serialize the environment to a string and save it.
+
+```
+myenv = CondaDependencies()
+myenv.add_conda_package('scikit-learn')
+
+env_file = 'service_files/env.yml'
+with open(env_file, 'w') as f:
+  f.write(myenv.serialize_to_string())
+```
+
+After creating the script and the environment, you combine them in an `InferenceConfig`:
+
+```
+classifier_inference_config = InferenceConfig(
+  runtime='python',
+  source_directory='service_files',
+  entry_script='score.py',
+  conda_file='env.yml'
+  )
+```
+
+## Deployment configuration
+
+Now that you have the entry script and the environment, you configure the compute service. If you deploy to an AKS cluster, you create it
+
+```
+cluster_name = 'aks-cluster'
+compute_config = AksCompute.provisioning_configuration(location='eastus')
+production_cluster = ComputeTarget.create(ws, cluster_name, compute_config)
+production_cluster.wait_for_completion()
+```
+
+You define the deployment configuration
+
+```
+classifier_deploy_config = AksWebservice.deploy_configuration(
+  cpu_cores=1,
+  memory_gb=1
+)
+```
+
+## Deploy the model
+
+```
+model = ws.models['classification_model']
+service = Model.deploy(
+  name='classification-service',
+  models=[model],
+  inference_config=classifier_inference_config,
+  deploy_config=classifier_deploy_config,
+  deployment_target=production_cluster
+  )
+service.wait_for_deployment()
+```
+
+## Consuming a real-time inferencing service
+
+For **testing**, you can use the AML SDK to call a web service through the `run` method of a `WebService` object. Typically,  you send data to `run` method in a JSON like
+
+
+```
+{
+  'data':[
+    [0.1, 0.2, 3.4],
+    [0.9, 8.2, 2.5],
+    ...
+  ]
+}
+```
+
+The response is a JSON with a prediction for each case
+
+```
+response = service.run(input_data=json_data)
+predictions = json.loads(response)
+```
+
+In **production**, you use a REST endpoint. You find the endpoint of a deployed service in Azure ML studio, or by retrieving the `scoring_url` property of a `Webservice` object:
+
+```
+endpoint = service.scoring_uri
+```
+
+There are 2 kinds of **authentication**:
+
+- key: requests are authenticated by specifying the key associated with the service
+- token: requests are authenticated by providing a JSON Web Token (JWT)
+
+By default, authentication is disabled for Azure Container Instance service (set to key-based authentication for AKS).
+
+To make an authenticate call to the REST endpoint, you include the oey or the token in the request header.
+
+## Troubleshooting service deployment
+
+You can
+
+- check the service state (should be _healty_): `service.state`
+- review service logs: `service.get_logs()`
+- deploy to local container
