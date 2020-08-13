@@ -597,7 +597,7 @@ Steps
 3. deployment configuration
 4. deploy model
 
-## Register the model
+## <a name="registermodel"></a>Register the model
 
 After training, you must register the model to Azure ML workspace.
 
@@ -620,7 +620,7 @@ run.register_model(
   )
 ```
 
-## Inference configuration
+## <a name="scoringscript"></a>Inference configuration
 
 The model will be deployed as a service consisting of
 
@@ -747,3 +747,92 @@ You can
 - check the service state (should be _healty_): `service.state`
 - review service logs: `service.get_logs()`
 - deploy to local container
+
+# Batch inference pipelines
+
+Pipeline to read input data, load a registered model, predict labels, and write results.
+
+1. [Register](#registermodel) a model
+2. Create a [scoring script](#scoringscript). The `run(mini_batch)` method makes the inference on each batch.
+3. Create a pipeline with ParallelRunStep
+4. Run the pipeline and retrieve the step output
+
+Azure ML provides a pipeline step performs parallel batch inference. Using `ParallelRunStep` class, you can read batches of files from a `File` dataset and write the output to a `PipelineData` reference. You can set the `output_action` to _"append_row"_ (ensuring all instances of the step will collate the result to a single output file named `parallel_run_step.txt`).
+
+```
+batch_data_set = ws.datasets('batch-data')
+
+# output location
+default_ds = we.get_default_datastore()
+output_dir = PipelineData(
+  name='inferences',
+  datastore=default_ds,
+  output_path_on_compute='results'
+)
+
+parallel_run_config = ParallelRunConfig(
+  source_directory='batch_scripts',
+  entry_script='batch_scoring_script.py',
+  mini_batch_size="5",
+  error_threshold=10,
+  output_action="append_row",
+  environment=batch_env,
+  compute_target=aml_cluster,
+  node_count=4
+  )
+
+parallelrun_step = ParallelRunStep(
+  name="batch-score",
+  parallel_run_config=parallel_run_config,
+  inputs=[batch_data_set.as_named_input('batch_data')],
+  output=output_dir,
+  arguments=[],
+  allow_reuse=True
+  )
+
+pipeline = Pipeline(
+  workspace=ws,
+  steps=[parallelrun_step]
+  )
+```
+
+Run the pipeline and retrieve output.
+
+```
+pipeline_run = Experiment(ws, 'batch_prediction_pipeline').submit(pipeline)
+pipeline_run.wait_for_completion()
+
+prediction_run = next(pipeline_run.get_children())
+prediction_output = prediction_run.get_output_data('inferences')
+prediction_output.download(local_path='results')
+```
+
+## Publishing a batch inference pipeline
+
+You can publish it as a **REST** service.
+
+```
+published_pipeline = pipeline_run.publish_pipeline(
+  name='Batch_Prediction_Pipeline',
+  description='Batch Pipeline',
+  version='1.0'
+  )
+
+rest_endpoint = published_pipeline.endpoint
+```
+
+Once published, you can use the endpoint to initiate a batch inferencing job.
+
+You can also **schedule** the published pipeline to have it run automatically.
+
+```
+weekly = ScheduleRecurrence(frequency='Week', interval=1)
+pipeline_schedule = Schedule.create(
+  ws,
+  name='Weekly Predictions',
+  description='batch inferencing',
+  pipeline_id=published_pipeline.id,
+  experiment_name='Batch_Prediction',
+  recurrence=weekly
+  )
+```
