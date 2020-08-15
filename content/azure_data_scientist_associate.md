@@ -836,3 +836,164 @@ pipeline_schedule = Schedule.create(
   recurrence=weekly
   )
 ```
+
+# Tuning hyperparameters
+
+Accomplished by training multiple models, using same algorithm and training data but different hyperparameter values. Then, evaluate for each the performance metric (eg accuracy), and the best-performing model is selected.
+
+In Azure ML, you make an experiment that consist of a _hyperdrive_ run, which initiates a child run for each hyperparameter. Each child run uses a training script with parametrised hyperparameter values to train a model, and logs the target performance metric achieved by the training model.
+
+## Define a search space
+
+Depends on the type of hyperparameter:
+
+- **discrete**. Make a `choice` out of
+  - an explicit python `list`: `choice([10, 20, 30])`
+  - a `range`: `choice(range(1,10))`
+  - select values from a discrete distribution: _qnormal, quniform, qlognormal, qloguniform_
+- **continuous**. Use any of these distribution: _normal, uniform, lognormal, loguniform_
+
+Define a search space by creating a dictionary with parameter expressions for each hyperparameter.
+
+```
+from azureml.train.hyperdrive import choice, normal
+
+param_space = {
+  '--batch_size': choice(16, 32, 64),
+  '--learning_rate': normal(10, 3)
+}
+```
+
+## Configuring sampling
+
+The values used in a tuning run depend on the type of _sampling_ used.
+
+**Grid sampling.** Every possible combination when hyperparameters are discrete.
+
+```
+param_space = {
+  '--batch_size': choice(16, 32, 64),
+  '--learning_rate': choice(10, 20)
+}
+
+param_sampling = GridParameterSampling(param_space)
+```
+
+**Random sampling.** Randomly select a value for each hyperparameter.
+
+```
+param_space = {
+  '--batch_size': choice(16, 32, 64),
+  '--learning_rate': normal(10, 3)
+}
+
+param_sampling = RandomParameterSampling(param_space)
+```
+
+**Bayesian sampling.** Based on Bayesian optimisation algorithm that tries to select parameter combinations that will result in improved performance from the previous selection.
+
+```
+param_space = {
+  '--batch_size': choice(16, 32, 64),
+  '--learning_rate': uniform(0.5, 0.1)
+}
+
+param_sampling = BayesianParameterSampling(param_space)
+```
+
+Can only be used with _choice, uniform, quniform_ distributions and can't be combined with _early termination_.
+
+## Configuring an early termination
+
+Typically, you set a maximum number of iterations, but this could still result in a large number of runs that don't result in a better model than a combination that has already been tried.
+
+To help preventing wasting time, you can set an _early termination_ policy that abandons runs that are unlikely to produce a better result than previously completed runs. The policy is evaluated at an _evaluation interval_ you specify, based on each time the target performance metric is logged. You can also set a _delay evaluation_ parameter to avoid evaluating the policy until a minimum number of iterations have been completed.
+
+**Note.** Early termination is particularly useful for deep learning scenarios where a deep neural network is trained iteratively over a number of epochs. The training script can report the target metric after each epoch, and if the run is significantly underperforming previous runs after the same number of intervals, it can be abandoned.
+
+**Bandit policy.** Stop a run if the target performance metric underperforms the best run so far by a specified margin.
+
+```
+early_termination_policy = BanditPolicy(
+  slack_amount=0.2, # abandon runs when metric is 0.2 or more worse than best run after the same number of intervals
+  evaluation_interval=1,
+  delay_evaluation=5
+  )
+```
+
+You can also use a slack _factor_ comparing the metric as ration rather than an absolute value.
+
+**Median stopping policy.** Abandoning runs where the target performance metric is worse than the median of the running averages fo all runs.
+
+```
+early_termination_policy = MedianStoppingPolicy(
+  evaluation_interval=1,
+  delay_evaluation=5
+  )
+```
+
+**Truncation selection policy.** Cancelling the lower performing _X%%_ of runs at each evaluation interval  based on the _truncation_percentage_ valu you specify for _X_.
+
+```
+early_termination_policy = TruncationSelectionPolicy(
+  truncation_percentage=10,
+  evaluation_interval=1,
+  delay_evaluation=5
+  )
+```
+
+## Running a hyperparameter tuning experiment
+
+In Azure ML, you tune hyper by running a _hyperdrive_ experiment. You need to create a training script just the way you would do for any other training experiment, except that you **must**:
+
+- include an argument for each hyperparameter
+- log the target performance metric.
+
+This example script trains a logistic regression using a `--regularization` argument (regularization rate), and logs the _accuracy_.
+
+```
+parser = argparse.ArgumentParser()
+parser.add_argument('--regularization', type=float, dest='reg_rate', default=0.01)
+args = parser.parse_args()
+reg = args.reg_rate
+
+# get experiment run context
+run = Run.get_context()
+
+data = run.input_datasets['training_data'].to_pandas_dataframe()
+X = data[['feature1', 'feature2', 'feature3', 'feature4']].values
+y = data['label'].values
+X_train, X_test, y_train, y_test = train_test_split(X, y test_size=0.3)
+
+model = LogisticRegression(C=1/reg, solver='liblinear').fit(X_train, y_train)
+
+# calculate and log accuracy
+y_hat = model.predict(X_test)
+acc = np.average(y_hat == y_test)
+run.log('Accuracy', np.float(acc))
+
+# save trained model
+os.makedirs('outputs', exist_ok=True)
+joblib.dump(value=model, filename='outputs/model.pkl')
+
+run.complete()
+```
+
+To prepare the hyperdrive experiment, you use a `HyperDriveConfig` object to configure the experiment run.
+
+```
+hyperdrive = HyperDriveConfig(
+  estimator=sklearn_estimator,
+  hyperparameter_sampling=param_sampling,
+  policy=None,
+  primary_metric_name='Accuracy',
+  primary_metricgoal=PrimaryMetricGoal.MAXIMIZE,
+  max_total_runs=6,
+  max_concurrent_runs=4
+  )
+
+experiment = Experiment(workspace=ws, name='hyperdrive_training')
+hyperdrive_run = experiment.submit(config=hyperdrive)
+```
+
+You can monitor hyperdrive experiment in Azure ML studio. The experiment will initiate a child run for each hyperparameter combination to be tried
