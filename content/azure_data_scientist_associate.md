@@ -997,3 +997,228 @@ hyperdrive_run = experiment.submit(config=hyperdrive)
 ```
 
 You can monitor hyperdrive experiment in Azure ML studio. The experiment will initiate a child run for each hyperparameter combination to be tried
+
+# Automate model selection
+
+Visual interface for automated ML in Azure ML Studio for _Enterprise_ edition only.
+
+You can use automated ML to train models for the tasks below. Azure ML supports common algorithms for these tasks:
+
+- classification
+  - logistic regression
+  - light gradient boosting machine
+  - decision tree
+  - random forest
+  - naive Bayes
+  - linear SVM
+  - XGBoost
+  - DNN classifier
+  - others...
+- regression
+  - linear regression
+  - light gradient boosting machine
+  - decision tree
+  - random forest
+  - elastic net
+  - LARS Lasso
+  - XGBoost
+  - Others
+- time series forecasting
+  - linear regression
+  - light gradient boosting machine
+  - decision tree
+  - random forest
+  - elastic net
+  - LARS Lasso
+  - XGBoost
+  - others
+
+By default, automated machine learning, will randomly select from the full range of algorithms for the specified task. You can choose to **block** individual algorithms from being selected.
+
+## Preprocessing and featurization
+
+Automated ML (AutoML) can apply preprocessing transformations to your data.
+
+- **scaling and normalization** applied to numeric data **automatically**
+- **optional featurization**
+  - missing value imputation
+  - categorical encoding
+  - dropping high cardinality features (eg IDs)
+  - feature engineering (eg date parts from DateTime)
+
+## Running AutoML experiment
+
+You can use Auzure ML Studio UI or use SDK (using `AutoMLConfig` class).
+
+```
+automl_run_config = RunConfiguration(framework='python')
+automl_config = AutoMLConfig(
+  name='auto ml experiment',
+  task='classification',
+  primary_metric='AUC_weighted',
+  compute_target=aml_compute,
+  training_data=train_dataset,
+  validation_data=test_dataset,
+  label_column_name='label',
+  featurization='auto',
+  iterations=12,
+  max_concurrent_iterations=4
+  )
+```
+
+With Azure ML Studio, you can create or select an Azure ML _dataset_ to be used as input for your AutoML experiment. When using the SDK, you can submit data by
+
+- specify a dataset or dataframe of _training data_ that includes features and label to be predicted
+- optionally, specify a second _validation data_ dataset or dataframe. If this is not provided, Azure ML will apply cross-validation.
+
+Alternatively:
+
+- specify a dataset, dataframe, or numpy array of _X_ values containing features with a corresponding _y_ array of label values
+
+One of the most important setting you specify is **primary_metric** (ie target performance metric). Azure ML supports a set of named metrics for each type of task.
+
+```
+get_primary_metrics('classification')
+```
+
+You can **submit** an AutoML experiment like any other SDK-based experiment:
+
+```
+automl_experiment = Experiment(ws, 'automl_experiment')
+automl_run = automl_experiment.submit(automl_config)
+```
+
+You can easily identify the best run in Auzre ML studio, and download or deploy the model it generated. Via SDK:
+
+```
+best_run, fitted_model = automl_run.get_output()
+best_run_metrics = best_run.get_metrics()
+for metric_name in best_run_metrics:
+  metric = best_run_metrics[metric_name]
+  print(metric_name, metric)
+```
+
+AutoML uses _scikit-learn_ pipelines. You can view the steps in the fitted model you obtained from the best run.
+
+```
+for step in fitted_model.named_steps:
+  print(step)
+```
+
+# Explain ML models
+
+Model explainers use statistical techniques to calculate **feature importance**. Explainers work by evaluating a test data set of feature cases and the labels the model predicts for them.
+
+**Global feature importance** quantifies the relative importance of each feature in the test dataset as a whole: which feature in the dataset influences prediction?
+
+**Local feature importance** measures the influence of each feature value for a specific individual prediction. Example, will Sam go deafult?
+
+> Prediction=0: Samuel won't default on the loan repayment
+
+Features:
+
+- _loan amount_; support for 0: `0.9`; support for 1: `-0.9`
+- _income_; support for 0: `0.6`
+- _age_; support for 0: `-0.2`
+- _marital status_; support for 0: `0.1`
+
+Because this is a _classification_ model, each feature gets a local importance value for each possible class, indicating the amount of support for that class based on the feature value.
+
+The most important feature for a prediction of class 1 is _loan amount_. There could be multiple reasons why local importance for an individualprediction varies form global importance for the overall dataset. For example, Sam might have a lower income than average, but the loan amount in this case might be unusually small.
+
+For a multi-class classification model, a local importance value for each possible class is calculated for every feature, with the total across all classes always being 0.
+
+For a **regression model**, the local importance values simply indicate the level of influence each feature has on the predicted scalar label.
+
+## Using explainers
+
+You can use Azure ML SDK to create explainers for models even if they were not trained using an Azure ML experiment.
+
+You install the `azureml-interpret` package. Types of explainer include:
+
+- `MimicExplainer` creates a _global surrogate model_ that approximates your trained model and can be used to generate explanations. This explainable model must have the same kind of architecture as your trained model (eg linear or tree-based)
+- `TabularExplainer` acts as a wrapper around various SHAP explainer algorithms, automatically choosing the one that is most appropriate for your model architecture
+- `PFIExplainer` (_Permutation Feature Importance_) analyzes feature importance by shuffling feature values and measuring the impact on prediction performance
+
+Example for hypothetical model named `loan_model`
+
+```
+mim_explainer = MimicExplainer(
+  model=loan_model,
+  initialization_examples=X_test,
+  explainable_model=DecisionTreeExplainableModel,
+  features=['loan_amount', 'income', 'age', 'marital_status'],
+  classes=['reject', 'approve']
+  )
+
+tab_explainer = TabularExplainer(
+  model=loan_model,
+  initialization_examples=X_test,
+  features=['loan_amount', 'income', 'age', 'marital_status'],
+  classes=['reject', 'approve']
+  )
+
+pfi_explainer = PFIExplainer(
+  model=loan_model,
+  features=['loan_amount', 'income', 'age', 'marital_status'],
+  classes=['reject', 'approve']
+  )
+```
+
+To retrieve **global feature importance**, call the `explain_global()` method of your explainer, and then use the `get_feature_importance_dict()` method to get a dictionary of the feature importance values.
+
+```
+global_mim_explanation = mim_explainer.explain_global(X_train)
+global_mim_feature_importance = global_mim_explanation.get_feature_importance_dict()
+
+# same as MimixExplainer
+global_tab_explanation = mim_explainer.explain_global(X_train)
+global_tab_feature_importance = global_tab_explanation.get_feature_importance_dict()
+
+# requires actual labels
+global_pfi_explanation = mim_explainer.explain_global(X_train)
+global_pfi_feature_importance = global_pfi_explanation.get_feature_importance_dict()
+```
+
+To retriev **local feature importance** from a `MimicExplainer` or a `TabularExplainer`, you must call the `explain_local()` specifying the subset of cases you want to explain. Then you use the `get_ranked_local_names()` and `get_ranked_local_values()` to retrieve dictionares.
+
+```
+# same for tab_explainer too
+local_mim_explanation = mim_explainer.explain(X_test[0:5])
+local_mim_features = local_mim_explanation.get_ranked_local_names()
+local_mim_importance = local_mim_explanation.get_ranked_local_values()
+```
+
+`PFIExplainer` does not support local feature importance explanations.
+
+## Creating explanations
+
+You can create an explainer and upload the explanation it generates to the run for later analysis.
+
+To create an explanation for the **experiment script**, you'll need to ensure that the `azureml-interpret` and `azureml-contrib-interpret` packages are installed in the run environment. Then you can use these to create an explanation from your trained model and upload it to the run outputs.
+
+```
+run = Run.get_context()
+
+# code to train model goes here
+
+# get explanation
+explainer = TabularExplainer(model, X_train, features=features, classes=labels)
+explanation = explainer.explain_global(X_test)
+
+# get an explanation client and upload the explanation
+explain_client = ExplanationClient.from_run(run)
+explain_client.upload_model_explanation(explanation, comment='Tabular Explanation')
+
+run.complete()
+```
+
+You can view the explanation you created for your model in the _Explanations_ tab for the run in Azure ML Studio.
+
+## Visualizing explanations
+
+Model explanations in Azure ML Studio include multiple visualizations that you can use to explore feature importance. Visualizations:
+
+- global feature importance
+- summary importance: shows the distribution of individual importance values for each feature across the test dataset
+- local feature importance by selecting an individual data point
