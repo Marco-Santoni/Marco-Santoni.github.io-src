@@ -1,3 +1,10 @@
+Title: Summary: Building AI Solutions with Azure ML
+Date: 2020-08-19 06:41
+Slug: summary_building_ai_solutions_azure_ml
+Status: published
+
+While studying for the _Azure Data Scientist Associate_ certification, I took notes from [Building AI Solution with Azure ML](https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/) course. In this single page, you'll find the entire content of the course (as of 18th August, 2020). This page is a small support for those preparing for earning the certification.
+
 # Intro
 
 ## Azure ML Workspace
@@ -1222,3 +1229,156 @@ Model explanations in Azure ML Studio include multiple visualizations that you c
 - global feature importance
 - summary importance: shows the distribution of individual importance values for each feature across the test dataset
 - local feature importance by selecting an individual data point
+
+# Monitor models
+
+You can use Application Insights to capture and review telemetry from models published with Azure ML. You must have an Application Insights resource associated with your Azure ML workspace.
+
+When you create an Azure ML workspace, you can select an Application Insights resource. If you do not select an existing resource, a new one is created in the same resource group as your workspace.
+
+When deploying a new real-time service, you can **enable** Application Insights in the deployment configuration for the service.
+
+```
+dep_config = AciWebservice.deploy_configuration(
+  cpu_cores=1,
+  memory_gb=1,
+  enable_app_insights=True
+  )
+```
+
+If you want to enable Application Insights for a service that is already deployed, you can modify the deployment configuration for AKS based services in the Azure portal.
+
+## Capture and view telemetry
+
+Application Insights automatically captures any information written to the standard output and error logs, and provides a query capability to view data in these logs.
+
+You can write any value to the standard output in the scoring script by using a `print`:
+
+```
+def run(raw_data):
+  data = json.loads(raw_data)['data']
+  predictions = model.predict(data)
+  print('Data: ' + str(data) + ' - Predictions: ' + str(predictions))
+  return predictions.tolist()
+```
+
+Azure ML creates a _custom dimension_ in the data model for the output you write.
+
+Yuo can use the Log Analytics query interface for the Applcation Insights in the Azure portal. It supports a SQL-like query syntax.
+
+# Monitor data drift
+
+Over time there may be trends that change the profile of the data, making your model less accurate. This change in data profiles between training and inferencing is known as _data drift_.
+
+Azure ML supports data drift monitoring through the use of _datasets_. You can compare two registered datasets to detect data drift, or you can capture new feature data submitted to a deployed model service and compare it to the dataset with which the model was trained.
+
+You register 2 datasets:
+
+- a _baseline_ dataset: original training data
+- a _target_ dataset that will be compared to the baseline on time intervals. This dataset requires a column for each feature you want to compare, and a timestamp column
+
+You define a _dataset monitor_ to detect data drift and trigger alerts if the rate of drift exceeds a specified threshold. You can create dataset monitors using Azure ML Studio or by using the `DataDriftDetector` class.
+
+```
+monitor = DataDriftDetector.create_from_datasets(
+  workspace=ws,
+  name='dataset-drift-monitor',
+  baseline_data_set=train_ds,
+  target_data_set=new_data_ds,
+  compute_target='aml-cluster',
+  frequency= 'week',
+  feature_list=['age', 'height', 'bmi'],
+  latency=24
+  )
+```
+
+You can _backfill_ to immediately compare baseline to existing data in target.
+
+```
+backfill = monitor.backfill( dt.datetime.now() - dt.timedelta(weeks=6), dt.datetime.now())
+```
+
+If you have **deployed a model** as a real-time web service, you can capture new inferencing data s it is submitted, and compare it to the original training data. It has the benefit of automatically collecting new target data as the deployed model is used.
+
+You include the training dataset in the model registration to provide a baseline.
+
+```
+model = Model.register(
+  workspace=ws,
+  model_path='./model/model.pkl',
+  model_name='mymodel',
+  datasets=[(Dataset.Scenario.TRAINING, train_ds)]
+  )
+```
+
+You enable data collection for services in which the model is used. You use the `ModelDataCollector` class in each service's scoring script, writing code to capture data and predictions and write them to the data collector (which will store them in Azure blob storage).
+
+```
+def init():
+  global model, data_collect, predict_collect
+  model_name = 'mymodel'
+  model = joblib.load(Model.get_model_path(model_name))
+
+  # enable collection of data and predictions
+  data_collect = ModelDataCollector(
+    model_name,
+    designation='inputs',
+    features=['age', 'height', 'bmi']
+    )
+  predict_collect = ModelDataCollector(
+    model_name,
+    designation='predictions',
+    features=['prediction']
+    )
+
+def run(raw_data):
+  data = json.loads(raw_data['data'])
+  predictions = model.predict(data)
+
+  data_collect(data)
+  predict_collect(predictions)
+
+  return predictions.tolist()
+```
+
+With the data collection code in place in the scoring script, you can enable data collection in the deployment configuration.
+
+```
+dep_config = AksWebservice.deploy_configuration(collect_model_data=True)
+```
+
+You can configure **data drift monitoring** by using a `DataDriftDetector` class.
+
+```
+model = ws.models['mymodel']
+datadrift = DataDriftDetector.create_from_model(
+  ws,
+  model.name,
+  model.version,
+  services=['my-svc'],
+  frequency='Week'
+  )
+```
+
+## Scheduling alerts
+
+You can specify a threshold for the rate of data drift and an operator email for notifications.
+
+Monitoring works by running a comparison at scheduled **frequency** (day, week, or month), and calculating data drift metrics for the features. For dataset monitors, you can specify a **latency** indicating the number of hours to allow for new data to be collected and added to the target dataset. For deployed model data drifts monitor, you can specify a `schedule_start` time value to indicate when the data drift run should start (if omitted, the run will start at the current time).
+
+Data drift is measured using a calculated _magnitude_ of change in the statistical distributions of feature values over time. You can configure a **threshold** for data drift magnitude.
+
+```
+alert_email = AlertConfiguration('data_scientist@contoso.com')
+monitor = DataDriftDetector.create_from_datasets(
+  ws,
+  'dataset-drift-detector',
+  baseline_data_set,
+  target_data_set,
+  compute_target=cpu_cluster,
+  frequency='Week',
+  latency=2,
+  drift_threshold=0.3,
+  alert_configuration=alert_email
+  )
+```
