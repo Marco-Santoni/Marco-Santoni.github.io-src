@@ -1,5 +1,5 @@
 Title: What we expected from Covid on March 10th
-Date: 2020-12-05 09:35
+Date: 2020-12-26 09:35
 Slug: what_we_expected_from_covid
 Status: published
 
