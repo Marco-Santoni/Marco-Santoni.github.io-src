@@ -41,3 +41,5 @@ We now move to the second question of my little experiment (asked on March 10th)
 I drew a black vertical line for each date given as answer. We were too optimistic in this survey too. 5 out of 7 respondents expected the situation to go under control (the red horizontal line represents the threshold of 50 cases in the question) by May 1st. No one was expecting the high number of daily cases to go beyond **June 18th**. As of today (December 26th), the number of daily cases in Italy did not go below 50 in a single day since then.
 
 We were just starting to experience an extraordinary event, and we were not expecting it to last for that long. This bias in perceiving the pandemic shorter than it was probably helped the social distancing policies. Changing your social habits is a privation that you willingly make if you expect it to last for a short time. Imagine that we knew Covid-19 would last for 9 months or even more.
+
+Another question naturally comes up about the economic policies that were taken to tackle the pandemic: were they subject to the same short-term bias that was measured in this experiment?
