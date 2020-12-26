@@ -1,7 +1,5 @@
 Title: A Simple Machine Learning Pipeline
 Date: 2016-06-19 10:37
-Author: mrsantoni
-Category: Uncategorized
 Slug: 2016/06/19/a-simple-machine-learning-pipeline
 Status: published
 

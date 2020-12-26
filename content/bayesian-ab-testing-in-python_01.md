@@ -1,8 +1,5 @@
 Title: Bayesian A/B Testing in Python
 Date: 2016-05-15 15:33
-Author: mrsantoni
-Category: Code
-Tags: Bayesian
 Slug: 2016/05/15/bayesian-ab-testing-in-python
 Status: published
 

@@ -9,11 +9,7 @@
 git clone git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
 mv Marco-Santoni.github.io.git output
 
-mkdir lib
-cd lib
-git clone git@github.com:getpelican/pelican-plugins.git
-git clone git@github.com:danielfrg/pelican-ipynb.git
-git clone git@github.com:gilsondev/pelican-clean-blog.git
+pip install -r requirements.txt
 ```
 
 ## Publish
@@ -22,10 +18,8 @@ git clone git@github.com:gilsondev/pelican-clean-blog.git
 # --On OSX only
 export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
 # -- Development
-make html && make serve
-# visit http://localhost:8000/
-# -- Publish
-make publish
+pelican content
+pelican --listen
 
 cd output
 git add .

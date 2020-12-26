@@ -52,7 +52,7 @@ VS Code - Azure ML Extension
 
 Azure ML tracks run of experiments
 
-```
+```python
 ...
 run = experiment.start_logging()
 ...
@@ -73,7 +73,7 @@ run.complete()
 
 Estimator: encapsulates a run configuration and a script configuration in a single object. Save trained model as pickle in `outputs` folder
 
-```
+```python
 estimator = Estimator(
   source_directory='experiment',
   entry_script='training.py',
@@ -86,7 +86,7 @@ run = experiment.submit(config=estimator)
 
 Framework-specific estimators simplify configurations
 
-```
+```python
 from azureml.train.sklearn import SKLearn
 
 estimator = SKLearn(
@@ -100,7 +100,7 @@ estimator = SKLearn(
 
 Use `argparse` to read the parameters in a script (eg regularization rate). To pass a parameter to an `Estimator`:
 
-```
+```python
 estimator = SKLearn(
   source_directory='experiment',
   entry_script='training.py',
@@ -113,13 +113,13 @@ estimator = SKLearn(
 
 Once the experiment `Run` has completed, you can retrieve its outputs (eg trained model).
 
-```
+```python
 run.download_file(name='outputs/models.pkl', output_file_path='model.pkl')
 ```
 
 Registering a model allows to track multiple versions of a model.
 
-```
+```python
 model = Model.register(
   workspace=ws,
   model_name='classification_model',
@@ -133,7 +133,7 @@ model = Model.register(
 
 or register from run:
 
-```
+```python
 run.register_model(
   ...
   model_path='outputs/model.pkl'
@@ -150,7 +150,7 @@ You can register a data store
 - via ML Studio
 - via SDK
 
-```
+```python
 ws = Workspace.from_config()
 blob = Datastore.register_azure_blob_container(
   workspace=ws,
@@ -167,7 +167,7 @@ In the SDK, you can list data stores.
 
 Most common: Azure blob and file
 
-```
+```python
 blob_ds.upload(
   src_dir='/files',
   target_path='/data/files',
@@ -187,7 +187,7 @@ You pass a data reference to the script to use a datastore. Data access models
 
 Pass reference as script parameter:
 
-```
+```python
 data_ref = blob_ds.path('data/files').as_download(path_on_compute='training_data')
 estimator = SKLearn(
   source_directory='experiment_folder',
@@ -199,7 +199,7 @@ estimator = SKLearn(
 
 Retrieve it in script and use it like local folder:
 
-```
+```python
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_folder', type='str', dest='data_folder')
 args = parser.parse_args()
@@ -219,7 +219,7 @@ Once a dataset is created, you can **register** it in the workspace (available l
 
 Tabular:
 
-```
+```python
 from azureml.core import Dataset
 
 blob_ds = we.get_default_datastore()
@@ -233,7 +233,7 @@ tab_ds = tab_ds.register(workspace, name='csv_table')
 
 File:
 
-```
+```python
 blob_ds = ws.get_default_datastore()
 file_ds = Dataset.File.from_files(path=(blob_ds, 'data/files/images/*.jpg'))
 file_ds = file_ds.register(workspace=ws, name='img_files')
@@ -241,7 +241,7 @@ file_ds = file_ds.register(workspace=ws, name='img_files')
 
 **Retrieve** a dataset
 
-```
+```python
 ws = Workspace.from_config()
 
 # Get a dataset from workspace datasets collection
@@ -253,13 +253,13 @@ ds2 = Dataset.get_by_name(ws, 'img_files')
 
 Datasets can be **versioned**. Create a new versioning by registering with same name and `create_new_version` property:
 
-```
+```python
 file_ds = file_ds.register(workspace=ws, name='img_files', create_new_version=True)
 ```
 
 Retrieve specific version:
 
-```
+```python
 img_ds = Dataset.get_by_name(workspace=ws, name='img_files', version=2)
 ```
 
@@ -276,20 +276,20 @@ Python runs in virtual environments (eg `Conda`, `pip`). Azure creates a Docker 
 
 - `Conda` or `pip` yaml file and load it:
 
-```
+```python
 env = Environment.from_conda_specification(name='training_env', file_path='./conda.yml')
 ```
 
 - from existing `Conda` environment:
 
-```
+```python
 env = Environment.from_conda_environment(name='training_env',
                             conda_environment_name='py_env')
 ```
 
 - specifying packages:
 
-```
+```python
 env = Environment('training_env')
 deps = CondaDependencies.create(conda_packages=['pandas', 'numpy']
                               pip_packages=['azureml-defaults'])
@@ -298,13 +298,13 @@ env.python.conda_dependencies = deps
 
 Once created, you can register the environment in the workspace.
 
-```
+```python
 env.register(workspace=ws)
 ```
 
 Retrieve and assign it to a `ScriptRunConfig` or an `Estimator`
 
-```
+```python
 tr_env = Environment.get(workspace=ws, name='training_env')
 estimator = Estimator(
   source_directory='experiment_folder',
@@ -325,7 +325,7 @@ Compute targets are physical or virtual computer on which experiments are run. T
 
 You can create a compute target via AML studio or via SDK. A **managed** compute target is one managed by AML. Via SDK
 
-```
+```python
 ws = Workspace.from_config()
 compute_name = 'aml-cluster'
 compute_config = AmlCompute.provisioning_configuration(
@@ -340,7 +340,7 @@ aml_cluster.wait_for_completion()
 
 An **unmanaged** compute target is defined and managed outside AML. You can attach it via SDK:
 
-```
+```python
 ws = Workspace.from_config()
 compute_name = 'db-cluster'
 db_workspace_name = 'db_workspace'
@@ -357,7 +357,7 @@ db_cluster.wait_for_completion()
 
 You can check if a compute target does not exist already:
 
-```
+```python
 compute_name = 'aml_cluster'
 try:
   aml_cluster = ComputeTarget(workspace=ws, name=compute_name)
@@ -368,7 +368,7 @@ except ComputeTargetException:
 
 You can use a compute target in an experiment run by specifying it as a parameter
 
-```
+```python
 compute_name = 'aml_cluster'
 training_env = Environment.get(workspace=ws, name='training_env')
 estimator = Estimator(
@@ -399,7 +399,7 @@ A _pipeline_ is a workflow of ml tasks in which each tasks is implemented as a _
 
 Define steps:
 
-```
+```python
 step1 = PythonScriptStep(
   name='prepare data',
   source_directory='scripts',
@@ -417,7 +417,7 @@ step2 = EstimatorStep(
 
 Assign steps to pipeline:
 
-```
+```python
 train_pipeline = Pipeline(
   workspace=ws,
   steps=[step1,step2]
@@ -442,7 +442,7 @@ To pass it
 
 Example
 
-```
+```python
 raw_ds = Dataset.get_by_name(ws, 'raw_dataset')
 # Define object to pass data between steps
 data_store = ws.get_default_datastore()
@@ -475,7 +475,7 @@ step2 = EstimatorStep(
 
 Inside the script, you can get reference to `PipelineData` object from the argument, and use it like  a local folder.
 
-```
+```python
 parser = argpare.ArgumentParser()
 parser.add_argument('--folder', type=str, dest='folder')
 args = parser.parse_args()
@@ -493,7 +493,7 @@ df.to_csv(output_path)
 
 By default, the step output from a previous pipeline run is reused without rerunning the step (if script, source directory and other params have not changed). You can control this:
 
-```
+```python
 step1 = PythonScriptStep(
   #...
   allow_reuse=False
@@ -502,7 +502,7 @@ step1 = PythonScriptStep(
 
 You can force the steps to run regardless of individual configuration:
 
-```
+```python
 pipeline_run = experiment.submit(train_pipeline, regenerate_outputs=True)
 ```
 
@@ -510,7 +510,7 @@ pipeline_run = experiment.submit(train_pipeline, regenerate_outputs=True)
 
 You can publish a pipelien to create a REST endpoint through which the pipeline can be run on demand.
 
-```
+```python
 published_pipeline = pipeline.publish(
   name='training_pipeline',
   description='Model training pipeline',
@@ -520,7 +520,7 @@ published_pipeline = pipeline.publish(
 
 You can view it in ML Studio and get the endpoint:
 
-```
+```python
 published_pipeline.endpoint
 ```
 
@@ -530,7 +530,7 @@ You start a published endpoint by making an HTTP request to it. You pass the aut
 
 Create a `PipelineParameter` object for each parameter. Example:
 
-```
+```python
 reg_param = PipelineParameter(name='reg_rate', default_value=0.01)
 # ...
 step2 = EstimatorStep(
@@ -544,7 +544,7 @@ step2 = EstimatorStep(
 
 After you publish a parametrised pipeline, you can pass parameter values in the JSON payload of the REST interface. Example
 
-```
+```python
 requests.post(
   enpoint,
   headers=auth_header,
@@ -561,7 +561,7 @@ requests.post(
 
 Define a `ScheduleRecurrence` and use it to create a `Schedule`.
 
-```
+```python
 daily = ScheduleRecurrence(
   frequency='Day',
   interval=1
@@ -578,7 +578,7 @@ pipeline_schedule = Schedule.create(
 
 To schedule a pipeline to run whenever **data changes**, you must create a `Schedule` that monitors a specific path on a datastore:
 
-```
+```python
 training_datastore = Datastore(workspace=ws, name='blob_data')
 pipeline_schedule = Schedule.create(
   # ...
@@ -608,7 +608,7 @@ Steps
 
 After training, you must register the model to Azure ML workspace.
 
-```
+```python
 classification_model = Model.register(
   workspace=ws,
   model_name='classification_model',
@@ -619,7 +619,7 @@ classification_model = Model.register(
 
 Or you can use the reference to the run:
 
-```
+```python
 run.register_model(
   model_name='classification_model',
   model_path='outputs/model.pkl',
@@ -641,7 +641,7 @@ Create the _entry script_ (or _scoring script_) as a Python file including 2 fun
 
 Example
 
-```
+```python
 def init():
   global model
   model_path = Model.get_model_path('classification_model')
@@ -656,7 +656,7 @@ def run(raw_data):
 
 You can configure the environment using Conda. You can use a `CondaDependencies` class to create a default environment (including `azureml-defaults` and other commonly-used) and add any other required packages. You then serialize the environment to a string and save it.
 
-```
+```python
 myenv = CondaDependencies()
 myenv.add_conda_package('scikit-learn')
 
@@ -667,7 +667,7 @@ with open(env_file, 'w') as f:
 
 After creating the script and the environment, you combine them in an `InferenceConfig`:
 
-```
+```python
 classifier_inference_config = InferenceConfig(
   runtime='python',
   source_directory='service_files',
@@ -680,7 +680,7 @@ classifier_inference_config = InferenceConfig(
 
 Now that you have the entry script and the environment, you configure the compute service. If you deploy to an AKS cluster, you create it
 
-```
+```python
 cluster_name = 'aks-cluster'
 compute_config = AksCompute.provisioning_configuration(location='eastus')
 production_cluster = ComputeTarget.create(ws, cluster_name, compute_config)
@@ -689,7 +689,7 @@ production_cluster.wait_for_completion()
 
 You define the deployment configuration
 
-```
+```python
 classifier_deploy_config = AksWebservice.deploy_configuration(
   cpu_cores=1,
   memory_gb=1
@@ -698,7 +698,7 @@ classifier_deploy_config = AksWebservice.deploy_configuration(
 
 ## Deploy the model
 
-```
+```python
 model = ws.models['classification_model']
 service = Model.deploy(
   name='classification-service',
@@ -715,7 +715,7 @@ service.wait_for_deployment()
 For **testing**, you can use the AML SDK to call a web service through the `run` method of a `WebService` object. Typically,  you send data to `run` method in a JSON like
 
 
-```
+```python
 {
   'data':[
     [0.1, 0.2, 3.4],
@@ -727,14 +727,14 @@ For **testing**, you can use the AML SDK to call a web service through the `run`
 
 The response is a JSON with a prediction for each case
 
-```
+```python
 response = service.run(input_data=json_data)
 predictions = json.loads(response)
 ```
 
 In **production**, you use a REST endpoint. You find the endpoint of a deployed service in Azure ML studio, or by retrieving the `scoring_url` property of a `Webservice` object:
 
-```
+```python
 endpoint = service.scoring_uri
 ```
 
@@ -766,7 +766,7 @@ Pipeline to read input data, load a registered model, predict labels, and write 
 
 Azure ML provides a pipeline step performs parallel batch inference. Using `ParallelRunStep` class, you can read batches of files from a `File` dataset and write the output to a `PipelineData` reference. You can set the `output_action` to _"append_row"_ (ensuring all instances of the step will collate the result to a single output file named `parallel_run_step.txt`).
 
-```
+```python
 batch_data_set = ws.datasets('batch-data')
 
 # output location
@@ -805,7 +805,7 @@ pipeline = Pipeline(
 
 Run the pipeline and retrieve output.
 
-```
+```python
 pipeline_run = Experiment(ws, 'batch_prediction_pipeline').submit(pipeline)
 pipeline_run.wait_for_completion()
 
@@ -818,7 +818,7 @@ prediction_output.download(local_path='results')
 
 You can publish it as a **REST** service.
 
-```
+```python
 published_pipeline = pipeline_run.publish_pipeline(
   name='Batch_Prediction_Pipeline',
   description='Batch Pipeline',
@@ -832,7 +832,7 @@ Once published, you can use the endpoint to initiate a batch inferencing job.
 
 You can also **schedule** the published pipeline to have it run automatically.
 
-```
+```python
 weekly = ScheduleRecurrence(frequency='Week', interval=1)
 pipeline_schedule = Schedule.create(
   ws,
@@ -862,7 +862,7 @@ Depends on the type of hyperparameter:
 
 Define a search space by creating a dictionary with parameter expressions for each hyperparameter.
 
-```
+```python
 from azureml.train.hyperdrive import choice, normal
 
 param_space = {
@@ -877,7 +877,7 @@ The values used in a tuning run depend on the type of _sampling_ used.
 
 **Grid sampling.** Every possible combination when hyperparameters are discrete.
 
-```
+```python
 param_space = {
   '--batch_size': choice(16, 32, 64),
   '--learning_rate': choice(10, 20)
@@ -888,7 +888,7 @@ param_sampling = GridParameterSampling(param_space)
 
 **Random sampling.** Randomly select a value for each hyperparameter.
 
-```
+```python
 param_space = {
   '--batch_size': choice(16, 32, 64),
   '--learning_rate': normal(10, 3)
@@ -899,7 +899,7 @@ param_sampling = RandomParameterSampling(param_space)
 
 **Bayesian sampling.** Based on Bayesian optimisation algorithm that tries to select parameter combinations that will result in improved performance from the previous selection.
 
-```
+```python
 param_space = {
   '--batch_size': choice(16, 32, 64),
   '--learning_rate': uniform(0.5, 0.1)
@@ -920,7 +920,7 @@ To help preventing wasting time, you can set an _early termination_ policy that 
 
 **Bandit policy.** Stop a run if the target performance metric underperforms the best run so far by a specified margin.
 
-```
+```python
 early_termination_policy = BanditPolicy(
   slack_amount=0.2, # abandon runs when metric is 0.2 or more worse than best run after the same number of intervals
   evaluation_interval=1,
@@ -932,7 +932,7 @@ You can also use a slack _factor_ comparing the metric as ration rather than an 
 
 **Median stopping policy.** Abandoning runs where the target performance metric is worse than the median of the running averages fo all runs.
 
-```
+```python
 early_termination_policy = MedianStoppingPolicy(
   evaluation_interval=1,
   delay_evaluation=5
@@ -941,7 +941,7 @@ early_termination_policy = MedianStoppingPolicy(
 
 **Truncation selection policy.** Cancelling the lower performing _X%%_ of runs at each evaluation interval  based on the _truncation_percentage_ valu you specify for _X_.
 
-```
+```python
 early_termination_policy = TruncationSelectionPolicy(
   truncation_percentage=10,
   evaluation_interval=1,
@@ -958,7 +958,7 @@ In Azure ML, you tune hyper by running a _hyperdrive_ experiment. You need to cr
 
 This example script trains a logistic regression using a `--regularization` argument (regularization rate), and logs the _accuracy_.
 
-```
+```python
 parser = argparse.ArgumentParser()
 parser.add_argument('--regularization', type=float, dest='reg_rate', default=0.01)
 args = parser.parse_args()
@@ -988,7 +988,7 @@ run.complete()
 
 To prepare the hyperdrive experiment, you use a `HyperDriveConfig` object to configure the experiment run.
 
-```
+```python
 hyperdrive = HyperDriveConfig(
   estimator=sklearn_estimator,
   hyperparameter_sampling=param_sampling,
@@ -1057,7 +1057,7 @@ Automated ML (AutoML) can apply preprocessing transformations to your data.
 
 You can use Auzure ML Studio UI or use SDK (using `AutoMLConfig` class).
 
-```
+```python
 automl_run_config = RunConfiguration(framework='python')
 automl_config = AutoMLConfig(
   name='auto ml experiment',
@@ -1084,20 +1084,20 @@ Alternatively:
 
 One of the most important setting you specify is **primary_metric** (ie target performance metric). Azure ML supports a set of named metrics for each type of task.
 
-```
+```python
 get_primary_metrics('classification')
 ```
 
 You can **submit** an AutoML experiment like any other SDK-based experiment:
 
-```
+```python
 automl_experiment = Experiment(ws, 'automl_experiment')
 automl_run = automl_experiment.submit(automl_config)
 ```
 
 You can easily identify the best run in Auzre ML studio, and download or deploy the model it generated. Via SDK:
 
-```
+```python
 best_run, fitted_model = automl_run.get_output()
 best_run_metrics = best_run.get_metrics()
 for metric_name in best_run_metrics:
@@ -1107,7 +1107,7 @@ for metric_name in best_run_metrics:
 
 AutoML uses _scikit-learn_ pipelines. You can view the steps in the fitted model you obtained from the best run.
 
-```
+```python
 for step in fitted_model.named_steps:
   print(step)
 ```
@@ -1149,7 +1149,7 @@ You install the `azureml-interpret` package. Types of explainer include:
 
 Example for hypothetical model named `loan_model`
 
-```
+```python
 mim_explainer = MimicExplainer(
   model=loan_model,
   initialization_examples=X_test,
@@ -1174,7 +1174,7 @@ pfi_explainer = PFIExplainer(
 
 To retrieve **global feature importance**, call the `explain_global()` method of your explainer, and then use the `get_feature_importance_dict()` method to get a dictionary of the feature importance values.
 
-```
+```python
 global_mim_explanation = mim_explainer.explain_global(X_train)
 global_mim_feature_importance = global_mim_explanation.get_feature_importance_dict()
 
@@ -1189,7 +1189,7 @@ global_pfi_feature_importance = global_pfi_explanation.get_feature_importance_di
 
 To retriev **local feature importance** from a `MimicExplainer` or a `TabularExplainer`, you must call the `explain_local()` specifying the subset of cases you want to explain. Then you use the `get_ranked_local_names()` and `get_ranked_local_values()` to retrieve dictionares.
 
-```
+```python
 # same for tab_explainer too
 local_mim_explanation = mim_explainer.explain(X_test[0:5])
 local_mim_features = local_mim_explanation.get_ranked_local_names()
@@ -1204,7 +1204,7 @@ You can create an explainer and upload the explanation it generates to the run f
 
 To create an explanation for the **experiment script**, you'll need to ensure that the `azureml-interpret` and `azureml-contrib-interpret` packages are installed in the run environment. Then you can use these to create an explanation from your trained model and upload it to the run outputs.
 
-```
+```python
 run = Run.get_context()
 
 # code to train model goes here
@@ -1238,7 +1238,7 @@ When you create an Azure ML workspace, you can select an Application Insights re
 
 When deploying a new real-time service, you can **enable** Application Insights in the deployment configuration for the service.
 
-```
+```python
 dep_config = AciWebservice.deploy_configuration(
   cpu_cores=1,
   memory_gb=1,
@@ -1254,7 +1254,7 @@ Application Insights automatically captures any information written to the stand
 
 You can write any value to the standard output in the scoring script by using a `print`:
 
-```
+```python
 def run(raw_data):
   data = json.loads(raw_data)['data']
   predictions = model.predict(data)
@@ -1279,7 +1279,7 @@ You register 2 datasets:
 
 You define a _dataset monitor_ to detect data drift and trigger alerts if the rate of drift exceeds a specified threshold. You can create dataset monitors using Azure ML Studio or by using the `DataDriftDetector` class.
 
-```
+```python
 monitor = DataDriftDetector.create_from_datasets(
   workspace=ws,
   name='dataset-drift-monitor',
@@ -1294,7 +1294,7 @@ monitor = DataDriftDetector.create_from_datasets(
 
 You can _backfill_ to immediately compare baseline to existing data in target.
 
-```
+```python
 backfill = monitor.backfill( dt.datetime.now() - dt.timedelta(weeks=6), dt.datetime.now())
 ```
 
@@ -1302,7 +1302,7 @@ If you have **deployed a model** as a real-time web service, you can capture new
 
 You include the training dataset in the model registration to provide a baseline.
 
-```
+```python
 model = Model.register(
   workspace=ws,
   model_path='./model/model.pkl',
@@ -1313,7 +1313,7 @@ model = Model.register(
 
 You enable data collection for services in which the model is used. You use the `ModelDataCollector` class in each service's scoring script, writing code to capture data and predictions and write them to the data collector (which will store them in Azure blob storage).
 
-```
+```python
 def init():
   global model, data_collect, predict_collect
   model_name = 'mymodel'
@@ -1343,13 +1343,13 @@ def run(raw_data):
 
 With the data collection code in place in the scoring script, you can enable data collection in the deployment configuration.
 
-```
+```python
 dep_config = AksWebservice.deploy_configuration(collect_model_data=True)
 ```
 
 You can configure **data drift monitoring** by using a `DataDriftDetector` class.
 
-```
+```python
 model = ws.models['mymodel']
 datadrift = DataDriftDetector.create_from_model(
   ws,
@@ -1368,7 +1368,7 @@ Monitoring works by running a comparison at scheduled **frequency** (day, week, 
 
 Data drift is measured using a calculated _magnitude_ of change in the statistical distributions of feature values over time. You can configure a **threshold** for data drift magnitude.
 
-```
+```python
 alert_email = AlertConfiguration('data_scientist@contoso.com')
 monitor = DataDriftDetector.create_from_datasets(
   ws,

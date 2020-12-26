@@ -1,8 +1,5 @@
 Title: Insights from PyData Florence 16
 Date: 2016-04-20 06:05
-Author: mrsantoni
-Category: Events
-Tags: Events
 Slug: 2016/04/20/insights-from-pydata-florence-16
 Status: published
 

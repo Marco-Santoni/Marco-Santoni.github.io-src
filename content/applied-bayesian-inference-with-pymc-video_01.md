@@ -1,7 +1,5 @@
 Title: Applied Bayesian Inference with PyMC [video]
 Date: 2016-06-30 17:03
-Author: mrsantoni
-Category: Uncategorized
 Slug: 2016/06/30/applied-bayesian-inference-with-pymc-video
 Status: published
 

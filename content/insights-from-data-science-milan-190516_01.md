@@ -1,8 +1,5 @@
 Title: Insights from Data Science Milan - 19/05/16
 Date: 2016-05-20 17:56
-Author: mrsantoni
-Category: Events
-Tags: Events
 Slug: 2016/05/20/insights-from-data-science-milan-190516
 Status: published
 
