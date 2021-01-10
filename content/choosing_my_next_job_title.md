@@ -1,4 +1,4 @@
-Title: Summary: Choosing my next job title (in a data science career)
+Title: Choosing my next job title (in a data science career)
 Date: 2021-01-08 07:41
 Slug: choosing_next_job_title
 Status: published
@@ -7,7 +7,7 @@ I'm now part of a data and AI team in a fintech spinoff. When I joined the compa
 
 ## What was I doing up to now?
 
-My background is in computer science, data science and software engineering. I started my career in 2013 as "_Data Scientist and Software Developer_" (what we would call today a _Machine Learning Engineer_?) in a small startup. I was then defined as an "_Associate_" when working as a data scientist in a consulting firm. In the last 3 years, I worked in a manufacturing firm as "_Data Scientist_" first, and as "_Digital Factory Dev Lead_" in the last year.
+I have a background in data science and software engineering. I started my career in 2013 as "_Data Scientist and Software Developer_" (what we would call today a _Machine Learning Engineer_?) in a small startup. I was then defined as an "_Associate_" when working as a data scientist in a consulting firm. In the last 3 years, I worked in a manufacturing firm as "_Data Scientist_" first, and as "_Digital Factory Dev Lead_" in the last year.
 
 ## What am I doing now?
 
@@ -22,4 +22,20 @@ My job has a mix of coding, architecture design, and project/product management.
 
 ## My job title?
 
-It is now time to define a **job title** that can summarize my responsibilities listed above. These are some 
+It is now time to define a job title that can summarize my responsibilities listed above. These are some alternatives I took into consideration:
+
+| Job title  | Comments |
+|---|---|
+| Senior Data Scientist/Engineer  | Too vertical on a piece of the pipeline compared to the spectrum of activities I work on  |
+|  Data Architect | Nicely defines the technical activities of designing and scaling our data solutions, but lacks the ownership of the backlog and of the product roadmap  |
+| Data Product Owner  | States clearly the ownership of the product backlog, but I feel that the "Product Owner" title is too tight to a Scrum role and lacks of technical responsibilities |
+| Lead Data and AI | States the responsibility of leading a team of experts in a domain. However, it does not feature any ownership on the product roadmap. Furthermore, it states a clear hierarchy in the team that goes against our team and company culture (a culture of distributed ownership and flat organization)|
+
+I was not satisified with the job titles above. Then, I came up with **"Data Product Manager"**. I felt this job title was what I was looking for because:
+
+- as a Product Manager, you are responsible for the product roadmap and strategy
+- the prefix "Data" adds a technical taste. By doing some research, I found that a TPM (Technical Product Manager) is a common job title that defines a product manager that is also in charge of the technical side of the product (architecture, etc)
+- it states the ownership of our data productan but does add any hierarchy-sounding adjectives
+- my end-to-end range of activities can fit well in this definition
+
+
