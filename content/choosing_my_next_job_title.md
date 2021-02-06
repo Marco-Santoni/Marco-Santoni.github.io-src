@@ -7,18 +7,18 @@ I'm now part of a data and AI team in a fintech spinoff. When I joined the compa
 
 ## What was I doing up to now?
 
-I have a background in data science and software engineering. I started my career in 2013 as "_Data Scientist and Software Developer_" (what we would call today a _Machine Learning Engineer_?) in a small startup. I was then defined as an "_Associate_" when working as a data scientist in a consulting firm. In the last 3 years, I worked in a manufacturing firm as "_Data Scientist_" first, and as "_Digital Factory Dev Lead_" in the last year.
+I have a background in data science and software engineering. I started my career in 2013 as "_Data Scientist and Software Developer_" (what we would call today a _Machine Learning Engineer_?) in a small startup. I was then defined as an "_Associate_" when working as a data scientist in a consulting firm. In the last 3 years, I worked in a manufacturing firm as "_Data Scientist_".
 
 ## What am I doing now?
 
 In the company I currently work at, I work in the data and AI team. My main activities include:
 
-- planning and prioritization of our data solution
-- making sure our Scrum cerimonies run smoothly
+- planning and prioritizing of our data solution
 - designing our data and software architecture
 - developing in first person our data integrations, analytics reporting, ML models and data solutions
+- making sure our Scrum cerimonies run smoothly
 
-My job has a mix of coding, architecture design, and project/product management. Why such a variety of responsibilities? I work in a small team part of company that is growing quickly starting from zero. There are no walls that divide tasks among functional teams (both because we can't afford and because we're not interested in such walls). Each team is therefore quite autonomous in doing their work by taking end-to-end ownership of the activity. For example, in my data and AI team we handle our work end-to-end. We are responsible for the entire pipeline: definining roadmaps, development, deployment, and monitoring.
+My job has a mix of coding, architecture design, and project/product management. Why such a variety of responsibilities? I work in a small team part of company that is growing quickly starting from zero. Each team is quite autonomous in doing their work by taking an end-to-end ownership of the activity. For example, in my data and AI team we handle our work end-to-end. We are responsible for the entire pipeline: definining roadmaps, development, deployment, and monitoring.
 
 ## My job title?
 
@@ -35,7 +35,7 @@ I was not satisified with the job titles above. Then, I came up with **"Data Pro
 
 - as a Product Manager, you are responsible for the product roadmap and strategy
 - the prefix "Data" adds a technical taste. By doing some research, I found that a TPM (Technical Product Manager) is a common job title that defines a product manager that is also in charge of the technical side of the product (architecture, etc)
-- it states the ownership of our data productan but does add any hierarchy-sounding adjectives
+- it states the ownership of our data product but does add any hierarchy-sounding adjectives
 - my end-to-end range of activities can fit well in this definition
 
-
+I shared these thoughts with my manager that agreed both on the definition of my responsibilities and on the job title. Let's see if these notes can help those that are facing the same challenge of choosing their own job title.
