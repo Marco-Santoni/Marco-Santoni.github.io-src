@@ -20,6 +20,8 @@ export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
 # -- Development
 pelican content
 pelican --listen
+# -- Deployment
+pelican content -s publishconf.py
 
 cd output
 git add .
