@@ -1,5 +1,5 @@
 Title: Models of Data Science teams: Chess vs Checkers
-Date: 2021-01-31 09:35
+Date: 2021-03-27 09:35
 Slug: chess_vs_checkers_teams
 Status: published
 
