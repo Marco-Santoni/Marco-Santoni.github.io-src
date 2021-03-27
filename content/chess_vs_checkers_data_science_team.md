@@ -9,6 +9,8 @@ One of the key decisions to take when building a data science team is the **mix 
 
 ## Chess-Team Model
 
+![Chess board]({static}/images/chess_400.jpg)
+
 The chess-team model is the common model we read about in literature. In a chess-team, each member of the team has a **specific role**. Roles are usually: _data engineers_, _data scientists_, and _machine learning engineers_. These roles typically correspond to different sets of skills (eg ML and statistics vs coding and devops) and to different set of activities (model selection vs data preparation vs model deployment).
 
 Similarly to a chess piece which has a clear role that is different from the other pieces, a member of a data science chess-team is assigned a subset of the tasks that are part of the development pipeline. Let's consider a simplistic development pipeline:
@@ -20,6 +22,8 @@ Similarly to a chess piece which has a clear role that is different from the oth
 The three activities of this development pipeline correspond to the three roles of the team, and there is little space for confusion. A data engineer probably won't work a lot on the model development and selection, while a data scientist probably won't be the one deploying the model in production.
 
 ## Checkers-Team Model
+
+![Checkers board]({static}/images/checkers_400.jpg)
 
 The checkers-team model is a definition of a team model that I introduce in this post. In a checkers-team, each member of the team does not have a specific role because he may  in charge of working on **any step of the development** pipeline. There are no roles like _data engineer_ or _data scientist_ because taking such a role implies limiting the scope of activities a team member should work on. Let' make an example. In a checkers-team, there is no _data scientist_ because no one is in charge of model development **only**.
 
@@ -48,3 +52,5 @@ Or is the team rather working on adding tiny features or on improving the operat
 What is the size of your data science team? Or even how many teams do you have? Large organizations go for multiple data teams. These teams may be divided **functionally** (eg 1 team of data engineers + 1 separate team of data sciensts) or they may be divided by **business units** (eg 1 data team for marketing and 1 data team for recommender system). You can't of course adopt the checkers-team model in an large organization that design the data teams by functions, but you may still adopt this model in a large organization that creates multiple self-organized teams each dedicated to a specific business unit.
 
 A last point to consider is the **IT architecture**. A checkers-team requires the same person to work on very different tasks. This is viable only if the complexity of such tasks is small. Adopting **SaaS and PaaS** resources simplifies every task by hiding the complexity of managing and running the resources. They let you focus on your goal. For example, building an API endpoint hosted by a function-as-a-service is something feasible by a data scientist with a mathematical background. Doing the same from scratch on an on-premise server is not as feasible.
+
+*Images courtesy of [@pecanlie](https://unsplash.com/photos/DC-UrroFRr4) and [@rafaelrex](https://unsplash.com/photos/U_Kz2RnfFAk)*
