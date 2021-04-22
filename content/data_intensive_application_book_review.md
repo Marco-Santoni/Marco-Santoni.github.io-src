@@ -28,3 +28,27 @@ I find this an amazing summary. In the end, any data flow architecture falls in 
 > When you deploy a new version of your application (of a server-side application, at least), you may entirely replace the old version with the new version within a few minutes. The same is not true of database contents: the five-year-old data will still be there, in the original encoding, unless you have explicitly rewritten it since then. This observation is sometimes summed up as data outlives code.
 
 Migrating data is harder than updating an application (and there are richer tools available for deploying an application than migrating a database).
+
+> May your application’s evolution be rapid and your deployments be frequent.
+
+I love this wish 😊
+
+> All of the difficulty in replication lies in handling changes to replicated data, and that’s what this chapter is about. We will discuss three popular algorithms for replicating changes between nodes: _single-leader_, _multi-leader_, and _leaderless replication_. Almost all distributed databases use one of these three approaches.
+
+I found this quote in the introduction to the _Replication_ chapter of the book. I heard often mentioning these replication mechanism, but for the first time I did a deep dive in the topic (that is not as easy as I would have expected). Kleppmann throughout the book makes you clear one thing: there are many things that can go wrong around data (timestamp alignment, networking, nodes down, etc), and they will go wrong at some point.
+
+> Because of this risk of skew and hot spots, many distributed datastores use a hash function to determine the partition for a given key. A good hash function takes skewed data and makes it uniformly distributed.
+
+And fortunately this hashing is often managed under the hood by datastores themselvs, eg Azure Cosmos.
+
+> Atomicity, isolation, and durability are properties of the database, whereas consistency (in the ACID sense) is a property of the application. The application may rely on the database’s atomicity and isolation properties in order to achieve consistency, but it’s not up to the database alone. Thus, the letter C doesn’t really belong in ACID.
+
+Interesting to read that the _C_ in such a popular acronym is there just to make the acronym work.
+
+> Errors will inevitably happen, but many software developers prefer to think only about the happy path rather than the intricacies of error handling.
+
+True story, but experience helps thinking a bit more to the _sad path_.
+
+> Simply dumping data in its raw form allows for several such transformations. This approach has been dubbed the sushi principle: "raw data is better"
+
+I have been following the _sushi principle_ in the last year without being aware of this definition. Nice name!
