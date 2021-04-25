@@ -1,11 +1,11 @@
-Title: Book Review: Designing Data-Intensive Applications
+Title: Notes from Designing Data-Intensive Applications
 Date: 2021-04-10 07:31
 Slug: review_designing_data_intensive
 Status: published
 
 [Designing Data-Intensive Applications](https://dataintensive.net/) by Martin Kleppmann was not a quick-read. Let me be clear, it is not such a long book (the paper version is 400 pages), but it is so dense of information that takes some time to go through. The book covers indeed a broad spectrum of data technologies and is dense of details in each paragraph. So, be ready before starting the journey.
 
-![Ocean of distributed data]({static}/images/data_map.jpg)
+![Ocean of distributed data]({static}/images/data_map_600.jpg)
 
 What did I learn from the book? I'll take few quotes from my notes.
 
@@ -52,3 +52,21 @@ True story, but experience helps thinking a bit more to the _sad path_.
 > Simply dumping data in its raw form allows for several such transformations. This approach has been dubbed the sushi principle: "raw data is better"
 
 I have been following the _sushi principle_ in the last year without being aware of this definition. Nice name!
+
+> Database triggers can be used to implement change data capture by registering triggers that observe all changes to data tables and add corresponding entries to a changelog table. However, they tend to be fragile and have significant performance overheads. Parsing the replication log can be a more robust approach, although it also comes with challenges, such as handling schema changes.
+
+I see replication log parsing as a growing trend. It enables the method "take data to datalake and then we'll see what to do". Furthermore, it fits for steaming data applications too. Today, not all vendors support the publication of such change logs natively (eg I didn't find a simple solution for _SQL Server_).
+
+![Database state as integral of stream]({static}/images/state_as_integral_of_stream_600.png)
+
+> If you are mathematically inclined, you might say that the application state is what you get when you integrate an event stream over time, and a change stream is what you get when you differentiate the state by time, as shown in figure. The analogy has limitations (for example, the second derivative of state does not seem to be meaningful), but it’s a useful starting point for thinking about data.
+
+This brilliant analogy is the intro of the **chapter I enjoyed the most** within the entire book, ie the _Stream Processing_ chapter. It represents a database as the latest cache representing the replication logs (the opposite point of view we normally have).
+
+>  In the absence of widespread support for a good distributed transaction protocol, I believe that log-based derived data is the most promising approach for integrating different data systems.
+
+I have seen Kafka as a tool for stream processing so far. I was not thinking of it as a tool for integrating data systems. The last chapter of the book gives a hint on how _log-based derived data_ may become a popular pattern soon.
+
+> The trend has been to keep stateless application logic separate from state management (databases): not putting application logic in the database and not putting persistent state in the application. As people in the functional programming community like to joke, "We believe in the separation of Church and state"
+
+Good one.
