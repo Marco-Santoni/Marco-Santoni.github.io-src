@@ -21,4 +21,22 @@ So, I got back to Cesare with the idea:
 
 > Why don't we start podcasting?
 
-Cesare was like "tell me more about it"
+Cesare was like: "tell me more about it". The idea was to interview an expert in Python or in its neighborhood. The format was inspired by Michael Kennedy's [Talk Python to Me](https://talkpython.fm/) podcast. I was thinking to a similar format but narrowing it to an Italian audience by running interviews in Italian. The goal was not only to create valuable content for Italian Pythonistas, but also to give voice to local community members. Knowing with a direct interview the persons behind a tech community is a way to help the community grow by making it appear somehow closer to you.
+
+The decision was taken. It was time to start.
+
+## How to run a podcast?
+
+Neither Cesare nor I ever run a podcast before. None of us was expert of audio recording and audio post-processing. Fortunately, we live in a time where you can find plenty of user friendly tools to create digital content. After doing some research, I found [Anchor](https://anchor.fm/) by Spotify. Anchor defines itself as "_the easiest way to make a podcast_". And it probabily is.
+
+Anchor lets you start a new podcast in minutes for free. You can record, cut, merge, and publish episodes directly via the mobile app. The app lets you invite guests to join the recording too. Anchor will then take care of distributing the content on major podcasting platforms.
+
+What is missing? A website and a logo! It turns out that Anchor creates a podcast page for your podcast. I simply bought a domain and linked it to that page. Regarding the logo, I have to confess I designed in Power Point.
+
+![Intervista Pythonista logo]({static}/images/intervista_pythonista.png)
+
+## Guests?
+
+Ok, we decided how to record and how to publish. It's time to record our first episode... who should we invite? Cesare and I started listing names of friends, colleagues, and community members that could be interviewed. We soon had around 20 names and our first choice was [Marco Bonzanini](https://marcobonzanini.com/category/podcast/) (thanks Marco for your availability!).
+
+<iframe src="https://anchor.fm/marco-santoni/embed/episodes/Ep-1-Diventare-imprenditori-di-se-stessi-con-NLP-e10a9g9/a-a5fjhcg" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
