@@ -1,9 +1,9 @@
 Title: How I started podcasting
 Date: 2021-08-09 09:35
 Slug: start_podcasting
-Status: draft
+Status: published
 
-On May 2021, the first episode of my podcast went live. The podcast is called [Intervista Pythonista](http://intervistapythonista.com/) and is co-hosted with [Cesare Placanica](https://it.linkedin.com/in/cesare-placanica). Cesare and I are members of the [Python Milano](http://milano.python.it/) community that helped us to kick-off the idea.
+On May 2021, the first episode of my first podcast went live. The podcast is called [Intervista Pythonista](http://intervistapythonista.com/) and is co-hosted with [Cesare Placanica](https://it.linkedin.com/in/cesare-placanica). Cesare and I are members of the [Python Milano](http://milano.python.it/) community that helped us to kick-off the idea.
 
 ## Why podcasting?
 
@@ -37,6 +37,12 @@ What is missing? A website and a logo! It turns out that Anchor creates a podcas
 
 ## Guests?
 
-Ok, we decided how to record and how to publish. It's time to record our first episode... who should we invite? Cesare and I started listing names of friends, colleagues, and community members that could be interviewed. We soon had around 20 names and our first choice was [Marco Bonzanini](https://marcobonzanini.com/category/podcast/) (thanks Marco for your availability!).
+Ok, we decided how to record and how to publish. It's time to record our first episode... who should we invite? Cesare and I started listing names of community members, colleagues, and even friends that could be interviewed. We soon had around 20 names, and our first choice was [Marco Bonzanini](https://marcobonzanini.com/category/podcast/) (thanks Marco again for your availability!).
 
 <iframe src="https://anchor.fm/marco-santoni/embed/episodes/Ep-1-Diventare-imprenditori-di-se-stessi-con-NLP-e10a9g9/a-a5fjhcg" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+
+We keep updated a kind of kanban board that lists potential guests, guests that have accepted the invitation, and those that have already been scheduled. We decided to have a fixed schedule for recording (every 2 weeks, on the same day, at the same time). Having a recurring schedule reduces complexity and made things work.
+
+At the end of every recording, we ask the guest to suggest us 1 or 2 names of potential future guests. This recommendation helps us filling the list of future guests with new names, and it lets us meet new Pythonistas outside of our direct network.
+
+## Some numbers
