@@ -1,5 +1,5 @@
 Title: How I started podcasting
-Date: 2021-08-09 09:35
+Date: 2021-11-07 09:35
 Slug: start_podcasting
 Status: published
 
@@ -41,8 +41,12 @@ Ok, we decided how to record and how to publish. It's time to record our first e
 
 <iframe src="https://anchor.fm/marco-santoni/embed/episodes/Ep-1-Diventare-imprenditori-di-se-stessi-con-NLP-e10a9g9/a-a5fjhcg" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
 
-We keep updated a kind of kanban board that lists potential guests, guests that have accepted the invitation, and those that have already been scheduled. We decided to have a fixed schedule for recording (every 2 weeks, on the same day, at the same time). Having a recurring schedule reduces complexity and made things work.
+We keep on updating a kind of kanban board that lists potential guests, guests that have accepted the invitation, and those that have already been scheduled. We decided to have a fixed schedule for recording (every 2 weeks, on the same day, at the same time). Having a recurring schedule reduces complexity and made things work.
 
 At the end of every recording, we ask the guest to suggest us 1 or 2 names of potential future guests. This recommendation helps us filling the list of future guests with new names, and it lets us meet new Pythonistas outside of our direct network.
 
 ## Some numbers
+
+Two days ago, we published the [10th episode](https://anchor.fm/marco-santoni/episodes/Ep-10-Demand-forecasting-con-serie-temporali-gerarchiche-e19q48p), and we have enough history to look back at numbers. As of 7th November 2021, we had _1,364_ plays. Our top episode had _167_ plays. The _84%_ of listeners are from Italy, and 2 out of 3 listeners uses their mobile device to listen to the podcast.
+
+What I'm most glad of are not these numbers, but the messages we receive often via [Slack](https://pythonmilano.herokuapp.com/) or [LinkedIn](https://www.linkedin.com/company/python-milano). Sometimes listeners writes us to say thanks for the valuable content they listened to. These messages are the highest reward for the time and effort we put into this podcast and the main reason we are doing this.
