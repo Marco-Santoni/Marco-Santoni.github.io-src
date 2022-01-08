@@ -43,5 +43,11 @@ Otto Neurath was one of the main contributor to the _picture language_, aka ISOT
 
 The chart represents the density of population in different cities. The information is represented as the number of persons that would live in a flat of 200 m2. The count of persons is not represented by a digit or by a bar, but it is represented by the repetition of a symbol as many time as the count of persons for that city. The result is effective. Density is no more a number, and you can _feel_ the size of the measure. Infographics can turn cold numbers into tangible perceptions of a phenomenon.
 
-pie charts
+## 5) Pie charts: bad by definition
+
+"Bad by definition" is the title of on of my [favourite blog posts](https://www.data-to-viz.com/caveat/pie.html) about data visualization. This article is a clean explanation of why you should not use pie charts for most of the use cases. The article starts with this example.
+
+Can you rank the slices of the pie by size? You'd probably struggle a bit trying to answer. The reason is that our brain is not used to measure and compare angles. It's funny to see pie charts being used every now and then in business reports. Most of the times, a basic bar chart would be way more effective to let the user understand the numbers. However, it seems that pie charts are now endemic in corporation, and the way is still long before getting rid of it :)
+
+
 design of information
