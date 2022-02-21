@@ -45,9 +45,21 @@ The chart represents the density of population in different cities. The informat
 
 ## 5) Pie charts: bad by definition
 
-"Bad by definition" is the title of on of my [favourite blog posts](https://www.data-to-viz.com/caveat/pie.html) about data visualization. This article is a clean explanation of why you should not use pie charts for most of the use cases. The article starts with this example.
+"Bad by definition" is the title of one of my [favourite blog posts](https://www.data-to-viz.com/caveat/pie.html) about data visualization. This article is a clean explanation of why you should not use pie charts for most of the use cases. The article starts with this example.
 
-Can you rank the slices of the pie by size? You'd probably struggle a bit trying to answer. The reason is that our brain is not used to measure and compare angles. It's funny to see pie charts being used every now and then in business reports. Most of the times, a basic bar chart would be way more effective to let the user understand the numbers. However, it seems that pie charts are now endemic in corporation, and the way is still long before getting rid of it :)
+![Yan Holtz - The issue with pie chart]({static}/images/datavizhiddengems/piechart.png)
+
+Can you rank the slices of the pie by size? You'd probably struggle a bit trying to answer. The reason is that our brain is not used to measure and compare angles. It's funny to see pie charts being used every now and then in business reports. Most of the times, a basic bar chart would be way more effective to let the user understand the numbers behind. However, it seems that pie charts are now endemic in corporations, and the way is still long before getting rid of it 😁
 
 
-design of information
+## 6) What is data visualization?
+
+Is data visualization a branch of computer science? It turns out that data visualization is broader discipline, and it is part of [information design](https://visme.co/blog/information-design/). Informationd esign is the practice of presenting information in a way that fosters an efficient and effective understanding of the information.
+
+Can the same data of a bar chart be represented in plain text? Yes.
+Would plain text require us the same effort to understand the information behind the numbers? Probably not.
+Would we even be able to get such information from plain text? Probably not because visualizing information helps our brain to perceive what's going on.
+
+I recently wrote about [an article](https://medium.com/@marcosantoni_39266/riforma-irpef-i-grafici-che-avrei-voluto-vedere-7a69f7577bc3) on the impact of information design on journalism....
+
+references
