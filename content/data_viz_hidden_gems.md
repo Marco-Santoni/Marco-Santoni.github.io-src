@@ -59,7 +59,9 @@ Is data visualization a branch of computer science? It turns out that data visua
 ![Plain text representation of data]({static}/images/datavizhiddengems/irpef_table_800.png)
 
 Can the same data of a bar chart be represented in plain text? Yes.
+
 Would plain text require us the same effort to understand the information behind the numbers? Probably not.
+
 Would we even be able to get such information from plain text? Probably not because visualizing information helps our brain to perceive what's going on.
 
 ![Same representation of data via line chart]({static}/images/datavizhiddengems/irpef_chart.png)
