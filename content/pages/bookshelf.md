@@ -4,6 +4,8 @@ As I mostly read e-books, I don't have a physical bookshelf at home. I decided t
 
 |   |   |
 |---|---|
+| ... next? |  <img src="../images/agileestimatingplanning.jpg" width="200" /> |
+|    |  **♥** Agile Estimating and Planning |
 |  <img src="../images/manmonthbook.jpg" width="200" /> |  <img src="../images/blackswanbook.jpg" width="200" /> |
 |  Mythical Man-Month  |  The Black Swan: The Impact of the Highly Improbable |
 |  <img src="../images/dataintensiveapplications.jpg" width="200" /> |  <img src="../images/phoenixproject.jpg" width="200" /> |
