@@ -4,8 +4,10 @@ As I mostly read e-books, I don't have a physical bookshelf at home. I decided t
 
 |   |   |
 |---|---|
-|  |  <img src="../images/bookshelf/essentialism.jpg" width="200" /> |
-|   |  Essentialism: the Disciplined Pursuit of Less |
+|  |  <img src="../images/bookshelf/fivedysfunctions.jpg" width="200" /> |
+|   | The Five Dysfunctions of a Team |
+| <img src="../images/bookshelf/storytellingwithdata.jpg" width="200" /> |  <img src="../images/bookshelf/essentialism.jpg" width="200" /> |
+| **♥** Storytelling with Data  |  Essentialism: the Disciplined Pursuit of Less |
 | <img src="../images/bookshelf/teamtopologies.jpg" width="200" /> |  <img src="../images/agileestimatingplanning.jpg" width="200" /> |
 |  **♥** Team Topologies |  **♥** Agile Estimating and Planning |
 |  <img src="../images/manmonthbook.jpg" width="200" /> |  <img src="../images/blackswanbook.jpg" width="200" /> |
