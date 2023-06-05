@@ -1,6 +1,13 @@
 Title: Fantacalla
 Status: hidden
 
+## Stagione 2019-2020
+
+### Lega
+
+<img src="{static}/images/fantacalla/20192020_lega.jpg" alt="Classifica" width="600">
+
+
 ## Stagione 2020-2021
 
 ### Lega
