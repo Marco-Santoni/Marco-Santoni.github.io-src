@@ -4,6 +4,8 @@ As I mostly read e-books, I don't have a physical bookshelf at home. I decided t
 
 |   |   |
 |---|---|
+|  |  <img src="../images/bookshelf/modeling_mindsets.jpg" width="200" /> |
+|   | Modeling Mindsets |
 | <img src="../images/bookshelf/webapi.jpg" width="200" /> |  <img src="../images/bookshelf/fivedysfunctions.jpg" width="200" /> |
 |  The Design of Web APIs | The Five Dysfunctions of a Team |
 | <img src="../images/bookshelf/storytellingwithdata.jpg" width="200" /> |  <img src="../images/bookshelf/essentialism.jpg" width="200" /> |
