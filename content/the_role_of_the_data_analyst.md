@@ -1,5 +1,5 @@
 Title: Expectations from a Data Analyst
-Date: 2023-07-26 07:35
+Date: 2023-08-07 07:35
 Slug: expectations_from_data_analyst
 Status: published
 
@@ -13,13 +13,13 @@ Such simple questions often require a complex work that goes beyond knowing well
 
 ## What the analyst enjoys the most (and the least)
 
-Once a business question has arrived, where do we start from? Most data analysts would start mining into the **data exploration** phase. This phase is usually the first of this activity, and the data analysts looks into distributions and patterns in the data. The goal here is to get a good comprehension of the data we are sitting on. And usually the data analysts has fun during this data exploration time.🎉🙌 He or she is playing with charts and with some statistics of the dataset.
+Once a business question has arrived, where do we start from? Most data analysts would start mining into the **data exploration** phase. This phase is usually the first one of the activity, and the data analysts look into distributions and patterns in the data. The goal here is to get a good comprehension of the data we are sitting on. And usually the data analysts has fun during this data exploration time.🎉🙌 He or she is playing with charts and with some statistics from the dataset.
 
-What does the data analyst usually **not** enjoy doing? 👎😭 Based on my experience, preparing the **presentation** of the analysis is the part of the activity that most data analysts enjoy the least. And what does it imply?
+What does the data analyst usually **not** enjoy doing? 👎😭 Based on my experience, preparing the **presentation** about the results of the analysis is the part of the activity that most data analysts enjoy the least. And what does it imply?
 
-ADD SKETCH OF THE TIMELINE HERE
+![Time dedicated to slides]({static}/images/time_dedicated_to_slides_small.png)
 
-Imagine you have **10 days** to work on this data analysis before the meeting with your stakeholders. As our dear data analysts enjoy playing with the data more than playing with PowerPoint, they would probably spend 9 days on mining the data and 1 day working on the presentation. And probably the 9 days do not depend on the actual complexity of the task. If the business question can be answerend in 5 days with some basic descriptive statistics, the data analysts would probably investe more and more time trying some more advanced modelling technique or some more fancy data visualization. Why? Because they enjoy it. So, the data analysis part of the activity fills all the available space like a gas in a room would do.
+Imagine you have **10 days** to work on this data analysis before the meeting with your stakeholders. As our dear data analysts enjoy playing with the data more than playing with PowerPoint, they would probably spend 9 days on mining the data and 1 day working on the presentation. And probably the 9 days do not depend on the actual complexity of the task. If the business question can be answerend in 5 days with some basic descriptive statistics, the data analysts would probably invest more and more time trying some more advanced modelling technique or some more fancy data visualization. Why? Because they enjoy it. So, the data analysis part of the activity fills all the available space like a gas in a room would do.
 
 Last day (if not very last hours) is usually left to working on the presentation.
 
@@ -37,7 +37,16 @@ Once the explorary data mining phase is over, the data analyst should take the t
 
 Why is it hard? We often believe that the audience is the subject matter expert and know what is actually the valuable information behind the data. That's why working on the explanatory phase is an uncomfortable zone for a data scientist, but she/he should feel confident in making recommendations and observations.
 
-## An example
+If we entitle a data analyst to interpret the business insights of the data, there are at least 2 things he/she should take into considerations:
+
+1. take enough **time to interpret** the data
+2. **review the data visualizations** to explicitly communicate his/her interpretation
+
+Regarding the 1st point, looking for business insights is surprisingly time consuming. You cannot just dedicate the very last hours of your activity to looking for explanations behind data patterns. We should probably reconsider a classic sequential approach to the activity (eg explore, explain, present) in favor of an approach that organizes our time as to have quick iterations around business hypothesis and repeat multiple iterations before concluding our activity.
+
+Regarding, the 2nd point, I'll go a bit deeper with an example.
+
+## Example: review your data viz
 
 You can find of course many examples on Knaflic's book. Let's look at one I picked one from [her website](https://www.storytellingwithdata.com/makeovers). Imagine we're working in a hospital and are analyzing lengths of hospitals stays after a surgery. For each stay of year 2019, we're given
 
@@ -59,3 +68,10 @@ Let's look at how an _explanatory_ chart would look like.
 ![Explanatory data analysis chart]({static}/images/surgery_data_explanatory_small.png)
 
 The chart now has a clear message that is stated in the title and is fully described in the text next to the actual plot. The new chart looks clean because any visual component that is not useful to grab the chosen message is either hidden or grayed out. The data analyst in this case has focused on explaining why 2019 was a success rather than showing plain data. That's why the bars of the `<=24` stays are highlighted in black, while, in contrast, the remaining bars are grayed out. The choice of colors captures the attention of the reader on the patterns and on the signal, rather than on the data itself.
+
+## Looking forward
+
+This article is mainly inspired by Knaflic's book and by my experience on interacting with stakeholders over the last years. I haven't done a research of the literature on the topic, so please consider this article as a set of opinionated recommendations on how a data scientist could maximize his/her impact when working on data mining activities. Agreeing with this approach means that a data scientist should invest more energy on
+
+- know the business of the company she/he works at and the market where it competes
+-
