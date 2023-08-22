@@ -39,4 +39,4 @@ The book has a focus on these design choices (eg the _resource expansion_ patter
 
 It is the first book I read so far entirely dedicated to developer experience. How can we improve the productivity and the overall satisfaction of the developers using our APIs?
 
-By reading it, you can learn an approach that goed beyond designing web APIs. You learn to focus on what simplifies the life of a developer, and I'm sure this thinking has an effect on how you write your code, your internal tools or even your docs.
+By reading it, you can learn an approach that goes beyond designing web APIs. You learn to focus on what simplifies the life of a developer, and I'm sure this thinking has an effect on how you write your code, your internal tools or even your docs.
