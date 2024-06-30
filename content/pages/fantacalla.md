@@ -26,3 +26,9 @@ Status: hidden
 ### Lega
 
 <img src="{static}/images/fantacalla/20222023_lega.jpg" alt="Classifica" width="600">
+
+## Stagione 2023-2024
+
+### Lega
+
+<img src="{static}/images/fantacalla/20232024_lega.jpg" alt="Classifica" width="600">
