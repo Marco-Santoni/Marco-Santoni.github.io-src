@@ -15,8 +15,6 @@ pip install -r requirements.txt
 ## Publish
 
 ```bash
-# --On OSX only
-export LC_ALL=en_US.UTF-8 && export LANG=en_US.UTF-8
 # -- Development
 pelican content
 pelican --listen

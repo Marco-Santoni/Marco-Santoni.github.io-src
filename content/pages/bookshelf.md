@@ -4,8 +4,10 @@ As I mostly read e-books, I don't have a physical bookshelf at home. I decided t
 
 |   |   |
 |---|---|
-|   |  <img src="../images/bookshelf/thinking_in_systems.jpg" width="200" /> |
-|   |  Thinking in systems |
+|   |  <img src="../images/bookshelf/iceberg-definitive.jpg" width="200" /> |
+|   |  Apache Iceberg. The definitive guide |
+| <img src="../images/bookshelf/kafka-definitive.jpg" width="200" />  |  <img src="../images/bookshelf/thinking_in_systems.jpg" width="200" /> |
+| Kafka. The definitive guide  |  Thinking in systems |
 | <img src="../images/bookshelf/permanent_portfolio.jpg" width="200" /> |  <img src="../images/bookshelf/inspired.jpg" width="200" /> |
 | The permanent portfolio | Inspired: how to create tech products customers love |
 | <img src="../images/bookshelf/datamesh.jpg" width="200" /> |  <img src="../images/bookshelf/modeling_mindsets.jpg" width="200" /> |
