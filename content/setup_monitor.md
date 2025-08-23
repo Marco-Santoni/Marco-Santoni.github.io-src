@@ -12,6 +12,9 @@ I've created a toy Lakehouse Monitoring setup to explore its features and capabi
 - [Where's Databricks going?](#wheres-databricks-going)  
     - My2C
 
+If you want to know more about what Databricks' Lakehouse Monitoring can do, I recommend checking out the official documentation. I have prepared a basic map of concepts that can help you get started.
+
+![Lakehouse Monitoring Concepts Map](./images/map_of_concepts_lakehouse_monitoring.svg)
 
 <h2 id="setup-a-toy-lakehouse-monitoring">Setup a toy Lakehouse Monitoring</h2>
 
