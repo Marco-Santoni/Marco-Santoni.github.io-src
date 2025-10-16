@@ -1,4 +1,4 @@
-Title: Codemotion 2025
+Title: Talk at Codemotion 2025
 Date: 2025-10-15
 Status: published
 
