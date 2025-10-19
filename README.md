@@ -8,18 +8,18 @@
 # add the publish repo in subfolder
 git clone git@github.com:Marco-Santoni/Marco-Santoni.github.io.git
 mv Marco-Santoni.github.io.git output
-
-pip install -r requirements.txt
 ```
+
+You need `uv` installed.
 
 ## Publish
 
 ```bash
 # -- Development
-pelican content
-pelican --listen
+uv run pelican content
+uv run pelican --listen
 # -- Deployment
-pelican content -s publishconf.py
+uv run pelican content -s publishconf.py
 
 cd output
 git add .
