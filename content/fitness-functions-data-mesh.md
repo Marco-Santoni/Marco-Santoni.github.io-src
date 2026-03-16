@@ -1,4 +1,4 @@
-Title: Fitness Functions for Data Mesh: Computational Policies
+Title: Fitness Functions for Data and AI: Computational Policies
 Date: 2026-03-15 08:35
 Slug: fitness_functions_data_mesh
 Status: published
