@@ -4,8 +4,8 @@ As I mostly read e-books, I don't have a physical bookshelf at home. I decided t
 
 |   |   |
 |---|---|
-| | <img src="../images/bookshelf/ai_engineering.jpeg" width="200" /> |
-| | AI Engineering | 
+| <img src="../images/bookshelf/software_architecture_hard_parts.jpg" width="200" /> | <img src="../images/bookshelf/ai_engineering.jpeg" width="200" /> |
+| **♥** Software Architecture: The Hard Parts | AI Engineering | 
 | <img src="../images/bookshelf/thinking_in_bets.jpg" width="200" /> | <img src="../images/bookshelf/platform_strategy.png" width="200" /> |
 | Thinking in Bets | Platform Strategy |
 |  <img src="../images/bookshelf/deep_work.jpg" width="200" /> |  <img src="../images/bookshelf/manage_low_performance.jpg" width="200" /> |
