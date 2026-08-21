@@ -18,3 +18,7 @@ A key insight from our work is that policies need to operate at the *row and col
 The talk was well received, and the Q&A showed strong interest in how to handle policy edge cases and multi-tenant scenarios. PyCon Italia was a great venue — an engaged audience and a lot of productive conversations afterwards.
 
 The [event page](https://2026.pycon.it/en/event/chatting-with-data-safely-role-based-authorization-for-text-to-sql-agents) has further details about the talk.
+
+Full video of the talk here:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/L9xrWyrhtXU?si=dtEIr2aJyPrxY1lz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
