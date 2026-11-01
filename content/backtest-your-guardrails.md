@@ -15,6 +15,8 @@ A guardrail looks at a prompt and decides: allow or block. That makes it a class
 - **False negative**: an attack goes through.
 - **False positive**: a legitimate prompt gets blocked.
 
+<img src="./images/backtest-your-guardrails/guardrail.svg" alt="A stream of prompts passes through a guardrail before the LLM: one attack slips through, and the blocked pile holds one attack and five legitimate prompts" style="max-width: 600px; width: 100%; height: auto;" />
+
 We'd never deploy a classifier in front of every request without measuring its errors first. A guardrail doesn't get an exemption because it's labelled "security".
 
 ## The error you don't see
